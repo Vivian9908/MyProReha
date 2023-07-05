@@ -18,8 +18,10 @@ import com.google.firebase.database.ValueEventListener;
 
 public class Register extends AppCompatActivity {
 
+
     //create Object of DatabaseReference class to access firebase's Realtime Database
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://myproreha-default-rtdb.firebaseio.com");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +48,7 @@ public class Register extends AppCompatActivity {
                 final String conPasswordTxt = conPassword.getText().toString();
 
                 //check if user fill out the fields before sending
-                if(fullnameTxt.isEmpty() || emailTxt.isEmpty() || phoneTxt.isEmpty() || passwordTxt.isEmpty()){
+                if (fullnameTxt.isEmpty() || emailTxt.isEmpty() || phoneTxt.isEmpty() || passwordTxt.isEmpty()) {
                     Toast.makeText(Register.this, "Please fill out all fields du spasst", Toast.LENGTH_SHORT).show();
                 }
                 //check if passwords are matching
@@ -54,21 +56,20 @@ public class Register extends AppCompatActivity {
                 else if (!passwordTxt.equals(conPasswordTxt)) {
                     Toast.makeText(Register.this, "Passwords are not matching", Toast.LENGTH_SHORT).show();
 
-                }
-
-                else{
+                } else {
 
                     databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                            //check if phonne is not registered before
-                            if(snapshot.hasChild(phoneTxt)){
+                            //check if phone is not registered before
+                            if (snapshot.hasChild(phoneTxt)) {
                                 Toast.makeText(Register.this, "phone is already registered", Toast.LENGTH_SHORT).show();
 
-                            }else {
+                            } else {
                                 //sending Data to realtimedatabase
-                                //we are usinf the phone number as unique ID
+                                //we are using the phone number as unique ID
+
                                 databaseReference.child("users").child(phoneTxt).child("fullname").setValue(fullnameTxt);
                                 databaseReference.child("users").child(phoneTxt).child("email").setValue(emailTxt);
                                 databaseReference.child("users").child(phoneTxt).child("password").setValue(passwordTxt);
