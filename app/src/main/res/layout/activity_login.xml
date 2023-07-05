@@ -24,9 +24,9 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="phone"
+        android:inputType="textPassword"
         android:id="@+id/password"
-        android:hint="Mobile"
+        android:hint="Password"
         android:maxLines="1"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
@@ -35,11 +35,39 @@
         />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/loginBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="20dp"
+        android:text="Login"
+        android:layout_marginTop="40dp"
         />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Don't hav an account"
+
+        />
+        <TextView
+            android:layout_marginStart="5dp"
+            android:id="@+id/registerNowBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register now"
+            android:textStyle="bold"
+
+            />
+
+    </LinearLayout>
 
 </LinearLayout>
