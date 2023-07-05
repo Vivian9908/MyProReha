@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "789701101806",
+    "project_id": "myproreha",
+    "storage_bucket": "myproreha.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:789701101806:android:778363586f0f6dc10b0bff",
+        "android_client_info": {
+          "package_name": "com.example.myproreha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "789701101806-bkkug567n0c3sn8o2d1n9r0auiptvf2i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myproreha",
+            "certificate_hash": "8ab1fd3ad7c489997018d5db08e665f360afc5c0"
+          }
+        },
+        {
+          "client_id": "789701101806-1erl3ch7ke7h7i07uihmri8juq3s3d6u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNbsXW2MMV9pcXYyo2g4aWHnT1Pj55o7I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "789701101806-1erl3ch7ke7h7i07uihmri8juq3s3d6u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
