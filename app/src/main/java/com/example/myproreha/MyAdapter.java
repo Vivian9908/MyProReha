@@ -44,14 +44,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
        holder.recCard.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Intent intent = new Intent(context, )
+               Intent intent = new Intent(context, UploadActivity.class);
+               intent.putExtra("Title", dataList.get(holder.getAdapterPosition()).getDataTherapie());
+               intent.putExtra("Date", dataList.get(holder.getAdapterPosition()).getDataDate());
+               intent.putExtra("Duration", dataList.get(holder.getAdapterPosition()).getDataDuration());
+               intent.putExtra("Notes", dataList.get(holder.getAdapterPosition()).getDataNotes());
+
+
+               context.startActivity(intent);
+
            }
        });
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return dataList.size();
     }
 }
 
