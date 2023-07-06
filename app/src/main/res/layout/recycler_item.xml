@@ -27,7 +27,7 @@
             >
 
             <TextView
-                android:id="@+id/Therapy_Name_txt"
+                android:id="@+id/recTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -47,7 +47,7 @@
                 android:background="@color/underline" />
 
             <TextView
-                android:id="@+id/Therapy_Date_txt"
+                android:id="@+id/recDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -60,7 +60,7 @@
                 tools:ignore="RtlCompat" />
 
             <TextView
-                android:id="@+id/Therapy_Duration_txt"
+                android:id="@+id/recDuration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -73,7 +73,7 @@
                 tools:ignore="RtlCompat" />
 
             <TextView
-                android:id="@+id/Therapy_Notes_txt"
+                android:id="@+id/recNotes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
