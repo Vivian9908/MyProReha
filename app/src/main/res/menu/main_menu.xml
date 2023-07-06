@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-    android:id="@+id/hello"
-    android:title="Say Hello"
+    android:id="@+id/profile"
+    android:title="Account Settings"
         android:src="@drawable/ic_add"/>
 
     <item
