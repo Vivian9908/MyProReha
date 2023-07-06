@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.hello){
+        if (id == R.id.profile){
 
             Toast.makeText(MainActivity.this, "Hello", Toast.LENGTH_SHORT).show();
 
