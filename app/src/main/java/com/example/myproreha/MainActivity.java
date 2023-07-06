@@ -42,16 +42,19 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public void onClick(View src)
-    {
-        int id = src.getId();
-        if (id == R.id.playbtn){
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.hello){
 
-        } else if (id == R.id.stopbtn){
+            Toast.makeText(MainActivity.this, "Hello", Toast.LENGTH_SHORT).show();
 
-        } else if (id == R.id.btnmenu){
+        } else if (id == R.id.logout){
+
+            logout();
 
         }
+        return super.onOptionsItemSelected(item);
     }
 
     public void logout(){
