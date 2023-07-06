@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -48,8 +50,27 @@ public class MainActivity extends AppCompatActivity {
         MyAdapter adapter = new MyAdapter(MainActivity.this, dataList);
         recyclerView.setAdapter(adapter);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference = FirebaseDatabase.getInstance().getReference("users/016093213131/Meine Stundenzettel");
+        dialog.show();
 
+        eventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dataList.clear();
+                for(DataSnapshot itemSnapshot: snapshot.getChildren()){
+                    DataClass dataClass = itemSnapshot.getValue(DataClass.class);
+                    dataList.add(dataClass);
+                }
+                adapter.notifyDataSetChanged();
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                dialog.dismiss();
+
+            }
+        });
 
 
 
