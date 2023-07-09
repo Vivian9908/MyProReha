@@ -3,6 +3,8 @@ package com.example.myproreha;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     ValueEventListener eventListener;
 
+    MyAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,26 +43,30 @@ public class MainActivity extends AppCompatActivity {
         fab = findViewById(R.id.fab);
         recyclerView = findViewById(R.id.recyclerView);
 
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 1);
+        recyclerView.setLayoutManager(gridLayoutManager);
+
+        dataList = new ArrayList<>();
+        adapter = new MyAdapter(MainActivity.this, dataList);
+        recyclerView.setAdapter(adapter);
+
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("users/016093213131/Meine Stundenzettel");
+
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setCancelable(false);
         builder.setView(R.layout.progress_layout);
-        AlertDialog dialog = builder.create();
-        dialog.show();
-
-        dataList  = new ArrayList<>();
-
-        MyAdapter adapter = new MyAdapter(MainActivity.this, dataList);
-        recyclerView.setAdapter(adapter);
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("users/016093213131/Meine Stundenzettel");
+        final AlertDialog dialog = builder.create();
         dialog.show();
 
         eventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 dataList.clear();
-                for(DataSnapshot itemSnapshot: snapshot.getChildren()){
+                for (DataSnapshot itemSnapshot: snapshot.getChildren()){
                     DataClass dataClass = itemSnapshot.getValue(DataClass.class);
+                    dataClass.setKey(itemSnapshot.getKey());
                     dataList.add(dataClass);
                 }
                 adapter.notifyDataSetChanged();
@@ -68,22 +76,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 dialog.dismiss();
-
             }
         });
-
-
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(MainActivity.this, UploadActivity.class);
                 startActivity(intent);
-
             }
         });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

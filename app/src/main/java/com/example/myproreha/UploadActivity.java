@@ -70,9 +70,9 @@ public class UploadActivity extends AppCompatActivity {
 
         //We are changing the child from title to currentDate,
         // because we will be updating title as well and it may affect child value.
-        String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+        //String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
 
-        newChildRef.child(currentDate)
+        newChildRef
                 .setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

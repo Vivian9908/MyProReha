@@ -7,6 +7,16 @@ public class DataClass {
     private String dataDuration;
     private String dataNotes;
 
+    private String key;
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
     public String getDataDate() {
         return dataDate;
     }
@@ -28,6 +38,7 @@ public class DataClass {
         this.dataTherapie = dataTherapie;
         this.dataDuration = dataDuration;
         this.dataNotes = dataNotes;
+
 
 
     }
