@@ -8,6 +8,12 @@
     android:orientation="vertical"
     tools:context=".Login">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="325dp"
+        android:layout_height="58dp"
+        app:srcCompat="@drawable/logo" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
