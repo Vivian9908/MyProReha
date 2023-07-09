@@ -1,4 +1,4 @@
-package com.example.myproreha;
+/*package com.example.myproreha;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -80,3 +80,4 @@ class MyViewHolder extends RecyclerView.ViewHolder{
 
     }
 }
+ */

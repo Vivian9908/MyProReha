@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     FloatingActionButton fab;
     RecyclerView recyclerView;
-    List<DataClass> dataList;
+    //List<DataClass> dataList;
     DatabaseReference databaseReference;
     ValueEventListener eventListener;
 
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         fab = findViewById(R.id.fab);
         recyclerView = findViewById(R.id.recyclerView);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        /*AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setCancelable(false);
         builder.setView(R.layout.progress_layout);
         AlertDialog dialog = builder.create();
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
+        */
 
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -96,8 +96,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.profile){
-
-            Toast.makeText(MainActivity.this, "Hello", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Profile!", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(MainActivity.this, YourProfile.class));
 
         } else if (id == R.id.logout){
 

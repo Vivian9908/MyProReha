@@ -1,6 +1,6 @@
 package com.example.myproreha;
 
-public class DataClass {
+/*public class DataClass {
 
     private String dataDate;
     private String dataTherapie;
@@ -36,4 +36,4 @@ public class DataClass {
 
     }
 
-}
+}*/

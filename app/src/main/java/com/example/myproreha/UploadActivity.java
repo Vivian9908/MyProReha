@@ -48,7 +48,7 @@ public class UploadActivity extends AppCompatActivity {
         uploadNotes = findViewById(R.id.notes_input);
         saveButton = findViewById(R.id.add_Button);
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
+           /* saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 uploadData();
@@ -57,7 +57,7 @@ public class UploadActivity extends AppCompatActivity {
         });
     }
 
-    public void uploadData(){
+        public void uploadData(){
 
 
         newChildRef.setValue("Stundenzettel");
@@ -86,7 +86,7 @@ public class UploadActivity extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(UploadActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
                     }
-                });
+                }); */
     }
 
 
