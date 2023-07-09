@@ -49,7 +49,7 @@ public class Register extends AppCompatActivity {
 
                 //check if user fill out the fields before sending
                 if (fullnameTxt.isEmpty() || emailTxt.isEmpty() || phoneTxt.isEmpty() || passwordTxt.isEmpty()) {
-                    Toast.makeText(Register.this, "Please fill out all fields du spasst", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Register.this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
                 }
                 //check if passwords are matching
                 //if not how text
