@@ -1,4 +1,4 @@
-/*package com.example.myproreha;
+package com.example.myproreha;
 
 import android.content.Intent;
 import android.util.Log;
@@ -117,4 +117,4 @@ class MyViewHolder extends RecyclerView.ViewHolder {
 
     }
 }
- */
+
