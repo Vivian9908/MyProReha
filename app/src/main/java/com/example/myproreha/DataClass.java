@@ -3,7 +3,7 @@ package com.example.myproreha;
 public class DataClass {
 
     private String dataDate;
-    private String dataTherapie;
+    private String dataTitle;
     private String dataDuration;
     private String dataNotes;
 
@@ -21,8 +21,8 @@ public class DataClass {
         return dataDate;
     }
 
-    public String getDataTherapie() {
-        return dataTherapie;
+    public String getDataTitle() {
+        return dataTitle;
     }
 
     public String getDataDuration() {
@@ -33,14 +33,11 @@ public class DataClass {
         return dataNotes;
     }
 
-    public DataClass(String dataDate, String dataTherapie, String dataDuration, String dataNotes) {
+    public DataClass(String dataDate, String dataTitle, String dataDuration, String dataNotes) {
         this.dataDate = dataDate;
-        this.dataTherapie = dataTherapie;
+        this.dataTitle = dataTitle;
         this.dataDuration = dataDuration;
         this.dataNotes = dataNotes;
-
-
-
     }
 
     public DataClass(){

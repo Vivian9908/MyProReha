@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     ValueEventListener eventListener;
 
-    MyAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +47,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(gridLayoutManager);
 
         dataList = new ArrayList<>();
-        adapter = new MyAdapter(MainActivity.this, dataList);
-        recyclerView.setAdapter(adapter);
-
-
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("users/016093213131/Meine Stundenzettel");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setCancelable(false);
@@ -60,15 +54,24 @@ public class MainActivity extends AppCompatActivity {
         final AlertDialog dialog = builder.create();
         dialog.show();
 
+        dataList = new ArrayList<>();
+
+        MyAdapter adapter = new MyAdapter(MainActivity.this, dataList);
+        recyclerView.setAdapter(adapter);
+        databaseReference = FirebaseDatabase.getInstance().getReference("users/016093213131/MeineStundenzettel");
+
+        dialog.show();
+
         eventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 dataList.clear();
-                for (DataSnapshot itemSnapshot: snapshot.getChildren()){
+                for(DataSnapshot itemSnapshot: snapshot.getChildren()){
                     DataClass dataClass = itemSnapshot.getValue(DataClass.class);
                     dataClass.setKey(itemSnapshot.getKey());
                     dataList.add(dataClass);
                 }
+
                 adapter.notifyDataSetChanged();
                 dialog.dismiss();
             }
@@ -78,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
