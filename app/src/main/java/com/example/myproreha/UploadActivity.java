@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -37,10 +38,14 @@ public class UploadActivity extends AppCompatActivity {
     TextView uploadDate;
 
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
+
 
         uploadDate = findViewById(R.id.date_input);
         uploadTherapie = findViewById(R.id.therapy_input);
@@ -48,7 +53,9 @@ public class UploadActivity extends AppCompatActivity {
         uploadNotes = findViewById(R.id.notes_input);
         saveButton = findViewById(R.id.add_Button);
 
-           /* saveButton.setOnClickListener(new View.OnClickListener() {
+
+
+           saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 uploadData();
@@ -86,7 +93,7 @@ public class UploadActivity extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(UploadActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
                     }
-                }); */
+                });
     }
 
 
