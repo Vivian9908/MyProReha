@@ -26,7 +26,6 @@
             android:id="@+id/recTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:text="Massage"
             android:textColor="#000"
             android:textSize="30sp"
@@ -78,6 +77,32 @@
             android:drawableLeft="@drawable/ic_note"
             android:text="Patient war sehr verspannt, nächste Sitzung intensivere Behandlung"
             />
+
+        <com.github.clans.fab.FloatingActionMenu
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:menu_fab_size="mini"
+            android:layout_marginStart="280dp"
+            android:layout_marginTop="-150dp"
+            app:menu_colorPressed="@color/lavender"
+            app:menu_colorNormal="@color/lavender"
+            app:menu_icon="@drawable/ic_list"
+            app:menu_openDirection="down"
+            app:menu_showShadow="false"
+            >
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/deleteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_delete"
+                app:fab_colorNormal="@color/red"
+                app:fab_showShadow="true"
+                app:fab_size="mini" />
+
+
+        </com.github.clans.fab.FloatingActionMenu>
+
 
 
     </LinearLayout>
