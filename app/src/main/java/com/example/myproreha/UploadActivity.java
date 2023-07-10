@@ -45,7 +45,6 @@ public class UploadActivity extends AppCompatActivity {
     EditText uploadTherapie, uploadDuration, uploadNotes;
     TextView uploadDate;
 
-    DatePickerDialog picker;
 
 
 
@@ -63,14 +62,15 @@ public class UploadActivity extends AppCompatActivity {
         uploadNotes = findViewById(R.id.notes_input);
         saveButton = findViewById(R.id.add_Button);
 
-        // Holen des aktuellen Datums
+        
+        //setzen aktuelles Datum
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
         String currentDate = dateFormat.format(calendar.getTime());
-
-        // Setzen des aktuellen Datums im TextView
         uploadDate.setText(currentDate);
-
+        
+        
+        //Implememtierung des DatePickers
         uploadDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,6 +104,12 @@ public class UploadActivity extends AppCompatActivity {
                 datePicker.show(getSupportFragmentManager(), "DatePicker");
             }
         });
+        
+        
+        //einfügen des Dropdowns
+
+
+
 
 
 
@@ -147,6 +153,7 @@ public class UploadActivity extends AppCompatActivity {
                     }
                 });
     }
-
+    
+   
 
 }

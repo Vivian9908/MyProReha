@@ -53,15 +53,17 @@
             android:background="@drawable/lavender_border"
             tools:ignore="HardcodedText,MissingConstraints" />
 
-        <EditText
+
+
+        <Spinner
             android:id="@+id/therapy_input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:ems="12"
+            android:ems=""
             android:layout_gravity="center_horizontal"
             android:gravity="center"
-            android:hint="Therapie"
+            android:text="Therapie"
             android:inputType="text"
             android:minHeight="48dp"
             android:layout_marginBottom="5dp"
