@@ -32,7 +32,6 @@ public class Register extends AppCompatActivity {
         final EditText phone = findViewById(R.id.phone);
         final EditText password = findViewById(R.id.password);
         final EditText conPassword = findViewById(R.id.conPassword);
-
         final Button registerBtn = findViewById(R.id.registerBtn);
         final TextView loginNowBtn = findViewById(R.id.loginNow);
 

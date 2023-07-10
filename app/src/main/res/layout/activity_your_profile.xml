@@ -8,6 +8,7 @@ android:orientation="vertical"
 tools:context=".Register">
 
         <TextView
+            android:id="@+id/account"
             android:layout_marginLeft="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -15,7 +16,6 @@ tools:context=".Register">
             android:fontFamily="sans-serif-condensed"
             android:textSize="18sp"
             android:textColor="#000000"
-            android:text="Your Account Settings:"
             android:layout_marginTop="50dp"
 
             />
