@@ -10,9 +10,10 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="325dp"
-        android:layout_height="58dp"
-        app:srcCompat="@drawable/logo" />
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/prorehalogo"
+        android:layout_marginBottom="20dp"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -61,6 +62,8 @@
         android:layout_marginEnd="20dp"
         android:text="Login"
         android:layout_marginTop="40dp"
+        android:background="@color/green1"
+        android:textColor="@color/white"
         />
 
     <LinearLayout

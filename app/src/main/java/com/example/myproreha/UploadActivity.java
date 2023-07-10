@@ -45,6 +45,7 @@ public class UploadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         uploadDate = findViewById(R.id.date_input);

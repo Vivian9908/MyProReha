@@ -33,26 +33,16 @@ public class YourProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_your_profile);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://myproreha-default-rtdb.firebaseio.com/users/123/fullname");
 
-
-
-        fab = findViewById(R.id.fab);
         fullname = findViewById(R.id.fullname);
         email = findViewById(R.id.email);
         phone = findViewById(R.id.phone);
         password = findViewById(R.id.password);
         conPassword = findViewById(R.id.conPassword);
         changeBtn = findViewById(R.id.changeBtn);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(YourProfile.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
 
         changeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +102,7 @@ public class YourProfile extends AppCompatActivity {
 
 
         // Daten aus der Datenbank abrufen
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        /*databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Hier haben Sie Zugriff auf die Daten aus der Datenbank
@@ -124,7 +114,7 @@ public class YourProfile extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Behandeln Sie den Fehler, falls erforderlich
             }
-        });
+        });*/
 
     }
 }
