@@ -39,36 +39,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-              if (dataList.isEmpty()) {
-            // dataList ist leer
-            // Fügen Sie hier Ihren Code ein, um darauf zu reagieren
-
-            // Zum Beispiel können Sie eine Meldung anzeigen, dass keine Daten vorhanden sind
-            Toast.makeText(context, "Keine Daten vorhanden", Toast.LENGTH_SHORT).show();
-
-            // Oder Sie können eine spezielle Ansicht anzeigen, die angibt, dass keine Daten vorhanden sind
-            // z.B. TextView mit der Nachricht "Keine Daten vorhanden" anzeigen
-
-
-
-        } else {
-            // dataList enthält Daten
-            // Fügen Sie hier Ihren Code ein, um darauf zu reagieren
-
-            // Zum Beispiel können Sie die RecyclerView sichtbar machen
-
-
-            // Oder Sie können zusätzlichen Code einfügen, um die Daten zu verarbeiten oder anzuzeigen
-            // z.B. Daten in eine andere Liste kopieren, Filterung oder Sortierung durchführen usw.
-
-            // Hier ist ein Beispiel, wie Sie die Daten in der dataList durchlaufen können
-            for (DataClass data : dataList) {
-                // Führen Sie Aktionen für jedes Datenobjekt aus
-                // z.B. Loggen Sie die Daten, zeigen Sie sie in einer Toast-Nachricht an, usw.
-                Log.d("MyAdapter", "Data: " + data.getDataTherapie());
-                Toast.makeText(context, "Data: " + data.getDataTherapie(), Toast.LENGTH_SHORT).show();
-            }
-        }
 
 
 
