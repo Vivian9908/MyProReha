@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.profile){
 
-            Toast.makeText(MainActivity.this, "Hello", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(MainActivity.this, YourProfile.class));
 
         } else if (id == R.id.logout){
 

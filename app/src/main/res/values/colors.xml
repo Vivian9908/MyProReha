@@ -10,4 +10,8 @@
     <color name="lavender">#8692F7</color>
     <color name="underline">#D8D6D6</color>
     <color name="grey">#9E9C9C</color>
+    <color name="orange">#ff7300</color>
+    <color name="green1">#088473</color>
+    <color name="green2">#00dc8f</color>
+
 </resources>
