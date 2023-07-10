@@ -37,23 +37,12 @@ public class YourProfile extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://myproreha-default-rtdb.firebaseio.com/users/123/fullname");
 
-
-
-        fab = findViewById(R.id.fab);
         fullname = findViewById(R.id.fullname);
         email = findViewById(R.id.email);
         phone = findViewById(R.id.phone);
         password = findViewById(R.id.password);
         conPassword = findViewById(R.id.conPassword);
         changeBtn = findViewById(R.id.changeBtn);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(YourProfile.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
 
         changeBtn.setOnClickListener(new View.OnClickListener() {
             @Override

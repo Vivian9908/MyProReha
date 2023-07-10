@@ -79,13 +79,6 @@
             android:text="Patient war sehr verspannt, nächste Sitzung intensivere Behandlung"
             />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-
-            <float
-        </RelativeLayout>
 
     </LinearLayout>
 
