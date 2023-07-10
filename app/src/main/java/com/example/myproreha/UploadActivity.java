@@ -8,10 +8,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,12 +21,18 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class UploadActivity extends AppCompatActivity {
 
@@ -37,6 +45,7 @@ public class UploadActivity extends AppCompatActivity {
     EditText uploadTherapie, uploadDuration, uploadNotes;
     TextView uploadDate;
 
+    DatePickerDialog picker;
 
 
 
@@ -54,9 +63,52 @@ public class UploadActivity extends AppCompatActivity {
         uploadNotes = findViewById(R.id.notes_input);
         saveButton = findViewById(R.id.add_Button);
 
+        // Holen des aktuellen Datums
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+        String currentDate = dateFormat.format(calendar.getTime());
+
+        // Setzen des aktuellen Datums im TextView
+        uploadDate.setText(currentDate);
+
+        uploadDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar cldr = Calendar.getInstance();
+                int day = cldr.get(Calendar.DAY_OF_MONTH);
+                int month = cldr.get(Calendar.MONTH);
+                int year = cldr.get(Calendar.YEAR);
+
+                MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
+                builder.setTitleText("Select date");
+                builder.setSelection(MaterialDatePicker.todayInUtcMilliseconds());
+                builder.setTheme(R.style.ThemeOverlay_App_DatePicker);
+                MaterialDatePicker<Long> datePicker = builder.build();
 
 
-           saveButton.setOnClickListener(new View.OnClickListener() {
+
+                datePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
+                    @Override
+                    public void onPositiveButtonClick(Long selection) {
+                                             Calendar selectedDate = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+                        selectedDate.setTimeInMillis(selection);
+
+                        int selectedDay = selectedDate.get(Calendar.DAY_OF_MONTH);
+                        int selectedMonth = selectedDate.get(Calendar.MONTH);
+                        int selectedYear = selectedDate.get(Calendar.YEAR);
+
+                        uploadDate.setText(selectedDay + "." + (selectedMonth + 1) + "." + selectedYear);
+                    }
+                });
+
+                datePicker.show(getSupportFragmentManager(), "DatePicker");
+            }
+        });
+
+
+
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 uploadData();

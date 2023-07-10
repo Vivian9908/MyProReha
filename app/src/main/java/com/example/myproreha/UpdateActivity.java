@@ -22,11 +22,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.util.Calendar;
+import java.util.TimeZone;
 
 public class UpdateActivity extends AppCompatActivity {
 
@@ -52,6 +57,41 @@ public class UpdateActivity extends AppCompatActivity {
         updateDate = findViewById(R.id.update_date);
         updateDuration = findViewById(R.id.update_duration);
         updateNotes = findViewById(R.id.update_notes);
+
+        updateDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar cldr = Calendar.getInstance();
+                int day = cldr.get(Calendar.DAY_OF_MONTH);
+                int month = cldr.get(Calendar.MONTH);
+                int year = cldr.get(Calendar.YEAR);
+
+                MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
+                builder.setTitleText("Select date");
+                builder.setSelection(MaterialDatePicker.todayInUtcMilliseconds());
+                builder.setTheme(R.style.ThemeOverlay_App_DatePicker);
+                MaterialDatePicker<Long> datePicker = builder.build();
+
+
+
+                datePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
+                    @Override
+                    public void onPositiveButtonClick(Long selection) {
+                        Calendar selectedDate = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+                        selectedDate.setTimeInMillis(selection);
+
+                        int selectedDay = selectedDate.get(Calendar.DAY_OF_MONTH);
+                        int selectedMonth = selectedDate.get(Calendar.MONTH);
+                        int selectedYear = selectedDate.get(Calendar.YEAR);
+
+                       updateDate.setText(selectedDay + "." + (selectedMonth + 1) + "." + selectedYear);
+                    }
+                });
+
+                datePicker.show(getSupportFragmentManager(), "DatePicker");
+            }
+        });
+
 
 
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -101,18 +141,11 @@ public class UpdateActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
+
                     FirebaseStorage storage = FirebaseStorage.getInstance();
                     StorageReference reference = storage.getReference().child("users/016093213131/MeineStundenzettel");
                     reference.delete();
 
-                    /*storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            // Deletion from Firebase Storage is successful
-                            Toast.makeText(UpdateActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        }
-                    });*/
                     Toast.makeText(UpdateActivity.this, "Updated", Toast.LENGTH_SHORT).show();
                     finish();
                 }

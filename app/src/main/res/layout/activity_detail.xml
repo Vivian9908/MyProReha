@@ -90,7 +90,7 @@
                 android:id="@+id/editBtn"
                 android:src="@drawable/ic_edit"
                 app:fab_showShadow="true"
-                app:fab_colorNormal="@color/green2"
+                app:fab_colorNormal="@color/orange"
                 app:fab_size="mini"/>
 
             <com.github.clans.fab.FloatingActionButton

@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.MyProReha" parent="Theme.Material3.DayNight">
+
         <!-- Primary brand color -->
        <item name="colorPrimary">@color/green1</item>
        <item name="colorPrimaryVariant">@color/green1</item>
@@ -15,6 +16,34 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
 
     </style>
+
+    <!--- <style name="MyDatePickerStyle" parent="Theme.AppCompat.Light.Dialog">
+
+        <item name="android:colorPrimary">@color/green2</item>
+        <item name="android:colorAccent">@color/green2</item>
+        <item name="colorOnPrimary">@color/green2</item>
+
+
+    </style>-->
+
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">cut</item>
+    </style>
+
+    <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="ThemeOverlay.App.DatePicker" parent="@style/ThemeOverlay.Material3.MaterialCalendar">
+
+        <item name="colorPrimary">@color/green1</item>
+        <item name="colorOnPrimary">@color/orange</item>
+
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
+        <!-- Customize text field of the text input mode. -->
+    </style>
+
 
     <style name="Theme.Material3.DayNight.NoActionBar">
         <item name="windowActionBar">false</item>
