@@ -12,9 +12,11 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,13 +26,17 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -42,8 +48,10 @@ public class UploadActivity extends AppCompatActivity {
     DatabaseReference newChildRef = parentNodeRef.push();
 
     Button saveButton;
-    EditText uploadTherapie, uploadDuration, uploadNotes;
+    EditText  uploadTherapie, uploadDuration, uploadNotes;
     TextView uploadDate;
+    
+    Spinner spinner;
 
 
 
@@ -104,14 +112,30 @@ public class UploadActivity extends AppCompatActivity {
                 datePicker.show(getSupportFragmentManager(), "DatePicker");
             }
         });
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference tableRef = database.getReference("deineTabelle");
+
+        spinner = findViewById(R.id.spinner);
+
+        tableRef.addValueEventListener(new ValueEventListener() {
+                                           @Override
+                                           public void onDataChange(DataSnapshot dataSnapshot) {
+                                               List<String> items = new ArrayList<>();
+
+                                               for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                   // Annahme, dass die Daten in einem String-Format vorliegen
+                                                   String item = snapshot.getValue(String.class);
+                                                   items.add(item);
+                                               }
+
+                                               ArrayAdapter<String> adapter = new ArrayAdapter<>(UploadActivity.this, android.R.layout.simple_spinner_item, items);
+                                               adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                               spinner.setAdapter(adapter);
+                                           }
+                                       });
         
         
-        //einfügen des Dropdowns
-
-
-
-
-
 
 
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -132,7 +156,7 @@ public class UploadActivity extends AppCompatActivity {
         String duration = uploadDuration.getText().toString();
         String therapy = uploadTherapie.getText().toString();
         String notes = uploadNotes.getText().toString();
-        DataClass dataClass = new DataClass(date, therapy, duration, notes);
+        DataClass dataClass = new DataClass(date,therapy, duration, notes);
 
 
         String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
