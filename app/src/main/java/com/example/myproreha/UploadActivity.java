@@ -76,9 +76,8 @@ public class UploadActivity extends AppCompatActivity {
         String notes = uploadNotes.getText().toString();
         DataClass dataClass = new DataClass(date, therapy, duration, notes);
 
-        //We are changing the child from title to currentDate,
-        // because we will be updating title as well and it may affect child value.
-        //String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+
+        String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
 
         newChildRef
                 .setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {

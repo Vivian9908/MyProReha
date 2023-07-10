@@ -87,12 +87,23 @@
             <com.github.clans.fab.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/editBtn"
+                android:src="@drawable/ic_edit"
+                app:fab_showShadow="true"
+                app:fab_colorNormal="@color/green2"
+                app:fab_size="mini"/>
+
+            <com.github.clans.fab.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/deleteBtn"
                 android:src="@drawable/ic_delete"
                 app:fab_showShadow="true"
                 app:fab_colorNormal="@color/red"
                 app:fab_size="mini"
                 ></com.github.clans.fab.FloatingActionButton>
+
+
 
         </com.github.clans.fab.FloatingActionMenu>
 
