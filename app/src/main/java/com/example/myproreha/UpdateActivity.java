@@ -39,7 +39,7 @@ public class UpdateActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference;
 
-    StorageReference storageReference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +74,8 @@ public class UpdateActivity extends AppCompatActivity {
             updateDate.setText(bundle.getString("Date"));
             updateDuration.setText(bundle.getString("Duration"));
             updateNotes.setText(bundle.getString("Notes"));
+            key = bundle.getString("Key");
+
 
         }
         databaseReference = FirebaseDatabase.getInstance().getReference("users/016093213131/MeineStundenzettel").child(key);
@@ -94,7 +96,7 @@ public class UpdateActivity extends AppCompatActivity {
         date = updateDate.getText().toString().trim();
         duration = updateDuration.getText().toString();
         notes = updateNotes.getText().toString();
-        DataClass dataClass = new DataClass(title, date, duration, notes);
+        DataClass dataClass = new DataClass(date, title, duration, notes);
         databaseReference.setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
