@@ -9,6 +9,12 @@ public class DataClass {
 
     private String key;
 
+    private String Therapy;
+
+    public String getTherapy() {
+        return Therapy;
+    }
+
     public String getKey() {
         return key;
     }
@@ -38,6 +44,7 @@ public class DataClass {
         this.dataTitle = dataTitle;
         this.dataDuration = dataDuration;
         this.dataNotes = dataNotes;
+
     }
 
     public DataClass(){

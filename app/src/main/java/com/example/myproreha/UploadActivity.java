@@ -11,7 +11,9 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -51,8 +53,9 @@ public class UploadActivity extends AppCompatActivity {
     Button saveButton;
     EditText uploadTherapie, uploadDuration, uploadNotes;
     TextView uploadDate;
+    Spinner therapySpinner;
 
-    Spinner spinner;
+
 
 
     @Override
@@ -67,6 +70,9 @@ public class UploadActivity extends AppCompatActivity {
         uploadDuration = findViewById(R.id.duration_input);
         uploadNotes = findViewById(R.id.notes_input);
         saveButton = findViewById(R.id.add_Button);
+        therapySpinner = findViewById(R.id.therapy_spinner);
+
+        loadTherapyData();
 
 
         //setzen aktuelles Datum
@@ -112,31 +118,6 @@ public class UploadActivity extends AppCompatActivity {
 
         //Implementierung des dropdowns
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference tableRef = database.getReference("Behandlungen");
-
-        spinner = findViewById(R.id.spinner);
-
-        tableRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                List<String> items = new ArrayList<>();
-
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String item = snapshot.getValue(String.class);
-                    items.add(item);
-                }
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(UploadActivity.this, android.R.layout.simple_spinner_item, items);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner.setAdapter(adapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
 
 
@@ -180,6 +161,32 @@ public class UploadActivity extends AppCompatActivity {
                     }
                 });
     }
+    private void loadTherapyData() {
+        DatabaseReference therapyRef = databaseReference.child("Therapy");
+
+        therapyRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<String> therapyList = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    // Hier ändern: Verwende den Schlüssel (Key) anstelle des Wertes (Value)
+                    String therapyName = snapshot.getKey();
+                    therapyList.add(therapyName);
+                }
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(UploadActivity.this,
+                        android.R.layout.simple_spinner_item, therapyList);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                therapySpinner.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("UploadActivity", "Failed to load therapy data: " + databaseError.getMessage());
+            }
+        });
+    }
+
 
 
 }
