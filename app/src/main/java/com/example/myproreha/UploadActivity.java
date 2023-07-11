@@ -119,6 +119,7 @@ public class UploadActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 uploadData();
 
             }
@@ -137,13 +138,8 @@ public class UploadActivity extends AppCompatActivity {
         DataClass dataClass = new DataClass(date, therapy, duration, notes);
 
 
-        String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+        //String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
 
-        if (duration.isEmpty() || notes.isEmpty()) {
-
-            Toast.makeText(UploadActivity.this, "Pleas fill out all fields", Toast.LENGTH_SHORT).show();
-
-        } else {
 
 
             newChildRef
@@ -152,7 +148,7 @@ public class UploadActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(UploadActivity.this, "Saved", Toast.LENGTH_SHORT).show();
-                                finish();
+
                             }
                         }
                     }).addOnFailureListener(new OnFailureListener() {
@@ -161,7 +157,7 @@ public class UploadActivity extends AppCompatActivity {
                             Toast.makeText(UploadActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
                         }
                     });
-        }
+
     }
 
     private void loadTherapyData() {

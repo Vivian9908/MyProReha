@@ -125,6 +125,9 @@ public class UpdateActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
 
+            String therapyValue = bundle.getString("Title");
+            int therapyIndex = getTherapyIndex(therapyValue);
+            therapySpinner.setSelection(therapyIndex);
             updateDate.setText(bundle.getString("Date"));
             updateDuration.setText(bundle.getString("Duration"));
             updateNotes.setText(bundle.getString("Notes"));
@@ -202,6 +205,18 @@ public class UpdateActivity extends AppCompatActivity {
             }
         });
     }
+
+    private int getTherapyIndex(String therapyValue) {
+        ArrayAdapter<String> adapter = (ArrayAdapter<String>) therapySpinner.getAdapter();
+        int count = adapter.getCount();
+        for (int i = 0; i < count; i++) {
+            if (adapter.getItem(i).equals(therapyValue)) {
+                return i;
+            }
+        }
+        return 0; // Default index if therapyValue is not found
+    }
+
 
 }
 
