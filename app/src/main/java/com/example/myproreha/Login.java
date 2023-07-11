@@ -1,100 +1,110 @@
 package com.example.myproreha;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class Login extends AppCompatActivity {
 
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://myproreha-default-rtdb.firebaseio.com");
+    private FirebaseAuth mAuth;
+    private EditText mail;
+    private EditText password;
+    private Button btn;
+    private TextView textRegister;
+    private FirebaseUser user1;
+    DatabaseReference reference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         setContentView(R.layout.activity_login);
 
-        final EditText phone = findViewById(R.id.phone);
-        final EditText password = findViewById(R.id.password);
-        final Button loginBtn = findViewById(R.id.loginBtn);
-        final TextView registerNow = findViewById(R.id.registerNowBtn);
+        mAuth = FirebaseAuth.getInstance();
+        mail = findViewById(R.id.mail);
+        password = findViewById(R.id.password);
+        btn = findViewById(R.id.loginBtn);
+        textRegister = findViewById(R.id.registerNowBtn);
 
-
-        loginBtn.setOnClickListener(new View.OnClickListener() {
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                final String phoneTxt = phone.getText().toString();
-                final String passwordTxt = password.getText().toString();
-
-                if (phoneTxt.isEmpty() || passwordTxt.isEmpty()) {
-
-                    Toast.makeText(Login.this, "Pleas enter your mobile or password", Toast.LENGTH_SHORT).show();
-
-                } else {
-
-                    databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                            //check if phonenumber is existing in firebase
-
-                            if (snapshot.hasChild(phoneTxt)) {
-
-                                //phonenumber exists
-                                //now get password
-
-                                final String getPassword = snapshot.child(phoneTxt).child("password").getValue(String.class);
-
-
-                                if (getPassword.equals(passwordTxt)) {
-
-                                    Toast.makeText(Login.this, "Successfully Logged in", Toast.LENGTH_SHORT).show();
-
-                                    //open MainActivity
-                                    startActivity(new Intent(Login.this, MainActivity.class));
-                                    finish();
-                                } else {
-                                    Toast.makeText(Login.this, "Wrong Password!", Toast.LENGTH_SHORT).show();
-                                }
-                            } else {
-                                Toast.makeText(Login.this, "Wrong Phonenumber", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-                }
+                login();
             }
         });
 
-        registerNow.setOnClickListener(new View.OnClickListener() {
+        textRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //open Register activity
-
-
                 startActivity(new Intent(Login.this, Register.class));
-
             }
         });
 
 
     }
+
+    private void login() {
+        String user = mail.getText().toString().trim();
+        String pass = password.getText().toString().trim();
+
+        if(user.isEmpty()){
+            mail.setError("Username can not be empty");
+        }
+        if(pass.isEmpty()){
+            password.setError("Password can not be empty");
+        }
+        else{
+            mAuth.signInWithEmailAndPassword(user,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(task.isSuccessful()){
+                        user1 = FirebaseAuth.getInstance().getCurrentUser();
+                        reference = FirebaseDatabase.getInstance().getReference("users");
+
+                        GlobalVariables.currentUser = user1.getUid().toString();
+
+
+
+                        //UserHelperClass helperClass = new UserHelperClass(user,pass);
+                        //Log.d("hallo","helperClass:"+ helperClass);
+                        //reference.child(GlobalVariables.currentUser).setValue(helperClass);
+
+                        startActivity(new Intent(Login.this, MainActivity.class));
+                        Toast.makeText(Login.this, "Login sucess"+GlobalVariables.currentUser, Toast.LENGTH_SHORT).show();
+
+                    }
+                    else{
+                        Toast.makeText(Login.this, "Login Failed"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+
+                }
+            });
+        }
+    }
+
+
 }

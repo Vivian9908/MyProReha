@@ -14,18 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyProReha"
         tools:targetApi="31">
-        <activity
-            android:name=".MyProfile"
-            android:exported="false" />
+
         <activity
             android:name=".UpdateActivity"
             android:exported="false"
-<<<<<<< Updated upstream
-            android:parentActivityName=".MainActivity" />
-=======
-            android:label="@string/app_update"
-            android:parentActivityName=".MainActivity"/>
->>>>>>> Stashed changes
+            android:label="@string/app_update" />
         <activity
             android:name=".DetailActivity"
             android:exported="false"

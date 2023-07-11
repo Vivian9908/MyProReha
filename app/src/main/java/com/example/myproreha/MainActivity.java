@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     FloatingActionButton fab;
     RecyclerView recyclerView;
-    List<DataClass> dataList;
+    List<DataClass2> dataList;
     DatabaseReference databaseReference;
     ValueEventListener eventListener;
 
@@ -49,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 1);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        dataList = new ArrayList<>();
+        dataList = new ArrayList<DataClass2>();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setCancelable(false);
@@ -57,11 +56,11 @@ public class MainActivity extends AppCompatActivity {
         final AlertDialog dialog = builder.create();
         dialog.show();
 
-        dataList = new ArrayList<>();
+        dataList = new ArrayList<DataClass2>();
 
         MyAdapter adapter = new MyAdapter(MainActivity.this, dataList);
         recyclerView.setAdapter(adapter);
-        databaseReference = FirebaseDatabase.getInstance().getReference("users/12/MeineStundenzettel");
+        databaseReference = FirebaseDatabase.getInstance().getReference("users/" + GlobalVariables.currentUser + "/therapies");
 
         dialog.show();
 
@@ -70,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 dataList.clear();
                 for(DataSnapshot itemSnapshot: snapshot.getChildren()){
-                    DataClass dataClass = itemSnapshot.getValue(DataClass.class);
+                    DataClass2 dataClass = itemSnapshot.getValue(DataClass2.class);
                     dataClass.setKey(itemSnapshot.getKey());
                     dataList.add(dataClass);
                 }

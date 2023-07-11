@@ -2,50 +2,30 @@ package com.example.myproreha;
 
 public class DataClass {
 
-    private String dataDate;
-    private String dataTitle;
-    private String dataDuration;
-    private String dataNotes;
 
-    private String key;
+    private String dataFullname;
+    private String dataEmail;
+    private String dataPassword;
 
-    private String Therapy;
-
-    public String getTherapy() {
-        return Therapy;
+    public String getDataFullname() {
+        return dataFullname;
     }
 
-    public String getKey() {
-        return key;
+    public String getDataEmail() {
+        return dataEmail;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public String getDataPassword() {
+        return dataPassword;
     }
 
-    public String getDataDate() {
-        return dataDate;
+    public DataClass(String dataDate, String dataTitle, String dataDuration) {
+        this.dataFullname = dataDate;
+        this.dataEmail = dataTitle;
+        this.dataPassword = dataDuration;
     }
 
-    public String getDataTitle() {
-        return dataTitle;
-    }
 
-    public String getDataDuration() {
-        return dataDuration;
-    }
-
-    public String getDataNotes() {
-        return dataNotes;
-    }
-
-    public DataClass(String dataDate, String dataTitle, String dataDuration, String dataNotes) {
-        this.dataDate = dataDate;
-        this.dataTitle = dataTitle;
-        this.dataDuration = dataDuration;
-        this.dataNotes = dataNotes;
-
-    }
 
     public DataClass(){
 

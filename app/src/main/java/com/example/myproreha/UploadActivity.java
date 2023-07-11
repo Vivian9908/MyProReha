@@ -47,11 +47,11 @@ public class UploadActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://myproreha-default-rtdb.firebaseio.com");
 
-    DatabaseReference parentNodeRef = databaseReference.child("users/");
+    DatabaseReference parentNodeRef = databaseReference.child("users/" + GlobalVariables.currentUser+ "/therapies");
     DatabaseReference newChildRef = parentNodeRef.push();
 
     Button saveButton;
-    EditText  uploadDuration, uploadNotes;
+    EditText  uploadTitle, uploadDuration, uploadNotes;
     TextView uploadDate;
     Spinner therapySpinner;
 
@@ -62,14 +62,14 @@ public class UploadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_upload);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
+        uploadTitle = findViewById(R.id.title_input);
         uploadDate = findViewById(R.id.date_input);
         uploadDuration = findViewById(R.id.duration_input);
         uploadNotes = findViewById(R.id.notes_input);
         saveButton = findViewById(R.id.add_Button);
-        therapySpinner = findViewById(R.id.therapy_spinner);
+       // therapySpinner = findViewById(R.id.therapy_spinner);
 
-        loadTherapyData();
+        //loadTherapyData();
 
 
         //setzen aktuelles Datum
@@ -133,9 +133,9 @@ public class UploadActivity extends AppCompatActivity {
 
         String date = uploadDate.getText().toString();
         String duration = uploadDuration.getText().toString();
-        String therapy = therapySpinner.getSelectedItem().toString();
+        String title = uploadTitle.getText().toString();
         String notes = uploadNotes.getText().toString();
-        DataClass dataClass = new DataClass(date, therapy, duration, notes);
+        DataClass2 dataClass = new DataClass2(date, title, duration, notes);
 
 
         //String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
@@ -160,7 +160,7 @@ public class UploadActivity extends AppCompatActivity {
 
     }
 
-    private void loadTherapyData() {
+    /*private void loadTherapyData() {
         DatabaseReference therapyRef = databaseReference.child("Therapy");
 
         therapyRef.addValueEventListener(new ValueEventListener() {
@@ -188,7 +188,7 @@ public class UploadActivity extends AppCompatActivity {
                 Log.e("UploadActivity", "Failed to load therapy data: " + databaseError.getMessage());
             }
         });
-    }
+    }*/
 
 
 }

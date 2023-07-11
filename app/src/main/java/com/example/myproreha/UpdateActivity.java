@@ -155,7 +155,7 @@ public class UpdateActivity extends AppCompatActivity {
         date = updateDate.getText().toString().trim();
         duration = updateDuration.getText().toString();
         notes = updateNotes.getText().toString();
-        DataClass dataClass = new DataClass(date, therapy, duration, notes);
+        DataClass2 dataClass = new DataClass2(date, therapy, duration, notes);
         databaseReference.setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
