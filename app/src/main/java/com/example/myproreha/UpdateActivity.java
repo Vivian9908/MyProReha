@@ -46,7 +46,7 @@ public class UpdateActivity extends AppCompatActivity {
     Button updateButton;
     EditText updateTitle, updateDuration, updateNotes;
     TextView updateDate;
-    String title, date, duration, notes;
+    String date, duration, notes;
     String key;
     Uri uri;
 
@@ -63,11 +63,10 @@ public class UpdateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_update);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //loadTherapyData();
+        loadTherapyData();
 
         updateButton = findViewById(R.id.updateBtn);
-        //therapySpinner = findViewById(R.id.therapySpinner);
-        updateTitle= findViewById(R.id.update_title);
+        therapySpinner = findViewById(R.id.therapy_spinner);
         updateDate = findViewById(R.id.update_date);
         updateDuration = findViewById(R.id.update_duration);
         updateNotes = findViewById(R.id.update_notes);
@@ -154,11 +153,11 @@ public class UpdateActivity extends AppCompatActivity {
 
 
         //String therapy = therapySpinner.getSelectedItem().toString();
-        title= updateTitle.getText().toString();
+        String therapy = therapySpinner.getSelectedItem().toString();
         date = updateDate.getText().toString().trim();
         duration = updateDuration.getText().toString();
         notes = updateNotes.getText().toString();
-        DataClass2 dataClass = new DataClass2(date, title, duration, notes);
+        DataClass2 dataClass = new DataClass2(date, therapy, duration, notes);
         databaseRef.setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -180,7 +179,7 @@ public class UpdateActivity extends AppCompatActivity {
         });
     }
 
-    /*private void loadTherapyData() {
+    private void loadTherapyData() {
         DatabaseReference therapyRef = databaseRef.child("Therapy");
 
         therapyRef.addValueEventListener(new ValueEventListener() {
@@ -218,7 +217,7 @@ public class UpdateActivity extends AppCompatActivity {
             }
         }
         return 0; // Default index if therapyValue is not found
-    }*/
+    }
 
 
 }
