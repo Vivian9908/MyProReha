@@ -51,7 +51,7 @@ public class UploadActivity extends AppCompatActivity {
     DatabaseReference newChildRef = parentNodeRef.push();
 
     Button saveButton;
-    EditText  uploadTitle, uploadDuration, uploadNotes;
+    EditText  uploadDuration, uploadNotes;
     TextView uploadDate;
     Spinner therapySpinner;
 

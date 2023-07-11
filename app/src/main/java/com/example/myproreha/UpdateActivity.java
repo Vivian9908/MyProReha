@@ -44,7 +44,7 @@ import java.util.TimeZone;
 public class UpdateActivity extends AppCompatActivity {
 
     Button updateButton;
-    EditText updateTitle, updateDuration, updateNotes;
+    EditText updateDuration, updateNotes;
     TextView updateDate;
     String date, duration, notes;
     String key;
@@ -125,10 +125,7 @@ public class UpdateActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
 
-           /* String therapyValue = bundle.getString("Title");
-            int therapyIndex = getTherapyIndex(therapyValue);
-            therapySpinner.setSelection(therapyIndex);*/
-            updateTitle.setText(bundle.getString("Title"));
+
             updateDate.setText(bundle.getString("Date"));
             updateDuration.setText(bundle.getString("Duration"));
             updateNotes.setText(bundle.getString("Notes"));
@@ -153,7 +150,7 @@ public class UpdateActivity extends AppCompatActivity {
 
 
         //String therapy = therapySpinner.getSelectedItem().toString();
-        String therapy = therapySpinner.getSelectedItem().toString();
+        String therapy = therapySpinner.getSelectedItem().toString();;
         date = updateDate.getText().toString().trim();
         duration = updateDuration.getText().toString();
         notes = updateNotes.getText().toString();
@@ -180,8 +177,7 @@ public class UpdateActivity extends AppCompatActivity {
     }
 
     private void loadTherapyData() {
-        DatabaseReference therapyRef = databaseRef.child("Therapy");
-
+        DatabaseReference therapyRef = databaseRef.child("therapy");
         therapyRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -190,17 +186,14 @@ public class UpdateActivity extends AppCompatActivity {
                     String therapyName = snapshot.getKey();
                     therapyList.add(therapyName);
                 }
-
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(UpdateActivity.this,
                         android.R.layout.simple_spinner_item, therapyList);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 therapySpinner.setAdapter(adapter);
-
                 // Optional: Set initial selection
                 int initialPosition = adapter.getPosition("Wähle eine Therapie");
                 therapySpinner.setSelection(initialPosition);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e("UpdateActivity", "Failed to load therapy data: " + databaseError.getMessage());
@@ -208,16 +201,6 @@ public class UpdateActivity extends AppCompatActivity {
         });
     }
 
-    private int getTherapyIndex(String therapyValue) {
-        ArrayAdapter<String> adapter = (ArrayAdapter<String>) therapySpinner.getAdapter();
-        int count = adapter.getCount();
-        for (int i = 0; i < count; i++) {
-            if (adapter.getItem(i).equals(therapyValue)) {
-                return i;
-            }
-        }
-        return 0; // Default index if therapyValue is not found
-    }
 
 
 }
