@@ -56,8 +56,6 @@ public class UploadActivity extends AppCompatActivity {
     Spinner therapySpinner;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,9 +117,6 @@ public class UploadActivity extends AppCompatActivity {
         //Implementierung des dropdowns
 
 
-
-
-
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,7 +133,7 @@ public class UploadActivity extends AppCompatActivity {
 
         String date = uploadDate.getText().toString();
         String duration = uploadDuration.getText().toString();
-        String therapy = uploadTherapie.getText().toString();
+        String therapy = therapySpinner.getSelectedItem().toString();
         String notes = uploadNotes.getText().toString();
         DataClass dataClass = new DataClass(date, therapy, duration, notes);
 
@@ -161,6 +156,7 @@ public class UploadActivity extends AppCompatActivity {
                     }
                 });
     }
+
     private void loadTherapyData() {
         DatabaseReference therapyRef = databaseReference.child("Therapy");
 
@@ -169,15 +165,23 @@ public class UploadActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<String> therapyList = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    // Hier ändern: Verwende den Schlüssel (Key) anstelle des Wertes (Value)
+
                     String therapyName = snapshot.getKey();
                     therapyList.add(therapyName);
                 }
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(UploadActivity.this,
+                /*ArrayAdapter<String> adapter = new ArrayAdapter<>(UploadActivity.this,
                         android.R.layout.simple_spinner_item, therapyList);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                therapySpinner.setAdapter(adapter);*/
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(UploadActivity.this, android.R.layout.simple_spinner_item, therapyList);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 therapySpinner.setAdapter(adapter);
+
+                String initialText = "Wähle eine Therapie";
+                int initialPosition = adapter.getPosition(initialText);
+                therapySpinner.setSelection(initialPosition);
             }
 
             @Override
@@ -186,7 +190,6 @@ public class UploadActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
 }
