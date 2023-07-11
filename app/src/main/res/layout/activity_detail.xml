@@ -1,11 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".DetailActivity">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_gravity="center_vertical"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="20dp"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="left"
+        android:layout_gravity="center_horizontal"
+        android:padding="20dp"
+        android:background="@drawable/lavender_border"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dein Stundenzettel:"
+            android:textColor="#000000"
+            android:textSize="15sp"
+
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/underline" />
 
     <TextView
         android:id="@+id/detailTitle"
@@ -63,6 +103,10 @@
         android:text="Patient war sehr verspannt, nächste Sitzung intensivere Behandlung"
         />
 
+    </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -78,9 +122,9 @@
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="30dp"
             app:menu_colorNormal="@color/orange"
-            app:menu_colorPressed="@color/orange"
+            app:menu_colorPressed="@color/orange2"
             app:menu_fab_size="normal"
-            app:menu_icon="@drawable/ic_list"
+            app:menu_icon="@drawable/ic_new"
             app:menu_openDirection="up"
             app:menu_showShadow="true">
 
@@ -90,7 +134,8 @@
                 android:id="@+id/editBtn"
                 android:src="@drawable/ic_edit"
                 app:fab_showShadow="true"
-                app:fab_colorNormal="@color/orange"
+                app:fab_colorNormal="@color/green2"
+                app:menu_colorPressed="@color/green1"
                 app:fab_size="mini"/>
 
             <com.github.clans.fab.FloatingActionButton

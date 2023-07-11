@@ -53,7 +53,6 @@ public class DetailActivity extends AppCompatActivity {
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(DetailActivity.this, "Toast", Toast.LENGTH_SHORT).show();
                 final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users/016093213131/MeineStundenzettel");
 
                 reference.child(key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -70,19 +69,18 @@ public class DetailActivity extends AppCompatActivity {
                             public void onSuccess(Void unused) {
                                 // Deletion from Firebase Storage is successful
                                 Toast.makeText(DetailActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                 finish();
                             }
                         });
                     }
                 });
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
 
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(DetailActivity.this, "Blub", Toast.LENGTH_SHORT).show();
                 Intent intent= new Intent(DetailActivity.this, UpdateActivity.class)
                 .putExtra("Title", detailTitle.getText().toString())
                 .putExtra("Date", detailDate.getText().toString())
