@@ -27,6 +27,7 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -44,17 +45,14 @@ public class UploadActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://myproreha-default-rtdb.firebaseio.com");
 
-    DatabaseReference parentNodeRef = databaseReference.child("users/016093213131/MeineStundenzettel" );
+    DatabaseReference parentNodeRef = databaseReference.child("users/016093213131/MeineStundenzettel");
     DatabaseReference newChildRef = parentNodeRef.push();
 
     Button saveButton;
-    EditText  uploadTherapie, uploadDuration, uploadNotes;
+    EditText uploadTherapie, uploadDuration, uploadNotes;
     TextView uploadDate;
-    
+
     Spinner spinner;
-
-
-
 
 
     @Override
@@ -70,14 +68,14 @@ public class UploadActivity extends AppCompatActivity {
         uploadNotes = findViewById(R.id.notes_input);
         saveButton = findViewById(R.id.add_Button);
 
-        
+
         //setzen aktuelles Datum
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
         String currentDate = dateFormat.format(calendar.getTime());
         uploadDate.setText(currentDate);
-        
-        
+
+
         //Implememtierung des DatePickers
         uploadDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,11 +92,10 @@ public class UploadActivity extends AppCompatActivity {
                 MaterialDatePicker<Long> datePicker = builder.build();
 
 
-
                 datePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
                     @Override
                     public void onPositiveButtonClick(Long selection) {
-                                             Calendar selectedDate = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+                        Calendar selectedDate = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
                         selectedDate.setTimeInMillis(selection);
 
                         int selectedDay = selectedDate.get(Calendar.DAY_OF_MONTH);
@@ -113,29 +110,35 @@ public class UploadActivity extends AppCompatActivity {
             }
         });
 
+        //Implementierung des dropdowns
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference tableRef = database.getReference("deineTabelle");
+        DatabaseReference tableRef = database.getReference("Behandlungen");
 
         spinner = findViewById(R.id.spinner);
 
         tableRef.addValueEventListener(new ValueEventListener() {
-                                           @Override
-                                           public void onDataChange(DataSnapshot dataSnapshot) {
-                                               List<String> items = new ArrayList<>();
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<String> items = new ArrayList<>();
 
-                                               for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                                   // Annahme, dass die Daten in einem String-Format vorliegen
-                                                   String item = snapshot.getValue(String.class);
-                                                   items.add(item);
-                                               }
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String item = snapshot.getValue(String.class);
+                    items.add(item);
+                }
 
-                                               ArrayAdapter<String> adapter = new ArrayAdapter<>(UploadActivity.this, android.R.layout.simple_spinner_item, items);
-                                               adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                               spinner.setAdapter(adapter);
-                                           }
-                                       });
-        
-        
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(UploadActivity.this, android.R.layout.simple_spinner_item, items);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
 
 
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +150,7 @@ public class UploadActivity extends AppCompatActivity {
         });
     }
 
-        public void uploadData(){
+    public void uploadData() {
 
 
         newChildRef.setValue("Stundenzettel");
@@ -156,7 +159,7 @@ public class UploadActivity extends AppCompatActivity {
         String duration = uploadDuration.getText().toString();
         String therapy = uploadTherapie.getText().toString();
         String notes = uploadNotes.getText().toString();
-        DataClass dataClass = new DataClass(date,therapy, duration, notes);
+        DataClass dataClass = new DataClass(date, therapy, duration, notes);
 
 
         String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
@@ -165,7 +168,7 @@ public class UploadActivity extends AppCompatActivity {
                 .setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             Toast.makeText(UploadActivity.this, "Saved", Toast.LENGTH_SHORT).show();
                             finish();
                         }
@@ -177,7 +180,6 @@ public class UploadActivity extends AppCompatActivity {
                     }
                 });
     }
-    
-   
+
 
 }
