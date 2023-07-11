@@ -47,7 +47,7 @@ public class UploadActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://myproreha-default-rtdb.firebaseio.com");
 
-    DatabaseReference parentNodeRef = databaseReference.child("users/" + GlobalVariables.currentUser+ "/therapies");
+    DatabaseReference parentNodeRef = databaseReference.child("users/" + GlobalVariables.currentUser);
     DatabaseReference newChildRef = parentNodeRef.push();
 
     Button saveButton;
@@ -129,7 +129,7 @@ public class UploadActivity extends AppCompatActivity {
     public void uploadData() {
 
 
-        newChildRef.setValue("Stundenzettel");
+        newChildRef.child("Therapies").setValue("Stundenzettel");
 
         String date = uploadDate.getText().toString();
         String duration = uploadDuration.getText().toString();
@@ -148,7 +148,7 @@ public class UploadActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(UploadActivity.this, "Saved", Toast.LENGTH_SHORT).show();
-
+                                finish();
                             }
                         }
                     }).addOnFailureListener(new OnFailureListener() {
@@ -157,6 +157,8 @@ public class UploadActivity extends AppCompatActivity {
                             Toast.makeText(UploadActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
                         }
                     });
+
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
     }
 
