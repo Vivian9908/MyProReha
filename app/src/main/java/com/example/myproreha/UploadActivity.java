@@ -51,7 +51,7 @@ public class UploadActivity extends AppCompatActivity {
     DatabaseReference newChildRef = parentNodeRef.push();
 
     Button saveButton;
-    EditText uploadTherapie, uploadDuration, uploadNotes;
+    EditText  uploadDuration, uploadNotes;
     TextView uploadDate;
     Spinner therapySpinner;
 
@@ -64,7 +64,6 @@ public class UploadActivity extends AppCompatActivity {
 
 
         uploadDate = findViewById(R.id.date_input);
-        uploadTherapie = findViewById(R.id.therapy_input);
         uploadDuration = findViewById(R.id.duration_input);
         uploadNotes = findViewById(R.id.notes_input);
         saveButton = findViewById(R.id.add_Button);
@@ -140,21 +139,29 @@ public class UploadActivity extends AppCompatActivity {
 
         String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
 
-        newChildRef
-                .setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(UploadActivity.this, "Saved", Toast.LENGTH_SHORT).show();
-                            finish();
+        if (duration.isEmpty() || notes.isEmpty()) {
+
+            Toast.makeText(UploadActivity.this, "Pleas fill out all fields", Toast.LENGTH_SHORT).show();
+
+        } else {
+
+
+            newChildRef
+                    .setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(UploadActivity.this, "Saved", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
                         }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(UploadActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(UploadActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
     }
 
     private void loadTherapyData() {
@@ -170,12 +177,8 @@ public class UploadActivity extends AppCompatActivity {
                     therapyList.add(therapyName);
                 }
 
-                /*ArrayAdapter<String> adapter = new ArrayAdapter<>(UploadActivity.this,
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(UploadActivity.this,
                         android.R.layout.simple_spinner_item, therapyList);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                therapySpinner.setAdapter(adapter);*/
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(UploadActivity.this, android.R.layout.simple_spinner_item, therapyList);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 therapySpinner.setAdapter(adapter);
 

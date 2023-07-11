@@ -12,9 +12,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,13 +27,18 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.TimeZone;
 
 public class UpdateActivity extends AppCompatActivity {
@@ -44,6 +52,9 @@ public class UpdateActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference;
 
+    Spinner therapySpinner;
+
+    DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://myproreha-default-rtdb.firebaseio.com");
 
 
     @Override
@@ -52,11 +63,14 @@ public class UpdateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_update);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        loadTherapyData();
+
         updateButton = findViewById(R.id.updateBtn);
-        updateTitle = findViewById(R.id.update_title);
+        therapySpinner = findViewById(R.id.therapySpinner);
         updateDate = findViewById(R.id.update_date);
         updateDuration = findViewById(R.id.update_duration);
         updateNotes = findViewById(R.id.update_notes);
+
 
         updateDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +87,6 @@ public class UpdateActivity extends AppCompatActivity {
                 MaterialDatePicker<Long> datePicker = builder.build();
 
 
-
                 datePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
                     @Override
                     public void onPositiveButtonClick(Long selection) {
@@ -84,14 +97,13 @@ public class UpdateActivity extends AppCompatActivity {
                         int selectedMonth = selectedDate.get(Calendar.MONTH);
                         int selectedYear = selectedDate.get(Calendar.YEAR);
 
-                       updateDate.setText(selectedDay + "." + (selectedMonth + 1) + "." + selectedYear);
+                        updateDate.setText(selectedDay + "." + (selectedMonth + 1) + "." + selectedYear);
                     }
                 });
 
                 datePicker.show(getSupportFragmentManager(), "DatePicker");
             }
         });
-
 
 
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -108,9 +120,11 @@ public class UpdateActivity extends AppCompatActivity {
 
                     }
                 });
+
+
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            updateTitle.setText(bundle.getString("Title"));
+
             updateDate.setText(bundle.getString("Date"));
             updateDuration.setText(bundle.getString("Duration"));
             updateNotes.setText(bundle.getString("Notes"));
@@ -132,11 +146,13 @@ public class UpdateActivity extends AppCompatActivity {
     }
 
     public void updateData() {
-        title = updateTitle.getText().toString().trim();
+
+
+        String therapy = therapySpinner.getSelectedItem().toString();
         date = updateDate.getText().toString().trim();
         duration = updateDuration.getText().toString();
         notes = updateNotes.getText().toString();
-        DataClass dataClass = new DataClass(date, title, duration, notes);
+        DataClass dataClass = new DataClass(date, therapy, duration, notes);
         databaseReference.setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -157,4 +173,35 @@ public class UpdateActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void loadTherapyData() {
+        DatabaseReference therapyRef = databaseRef.child("Therapy");
+
+        therapyRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<String> therapyList = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String therapyName = snapshot.getKey();
+                    therapyList.add(therapyName);
+                }
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(UpdateActivity.this,
+                        android.R.layout.simple_spinner_item, therapyList);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                therapySpinner.setAdapter(adapter);
+
+                // Optional: Set initial selection
+                int initialPosition = adapter.getPosition("Wähle eine Therapie");
+                therapySpinner.setSelection(initialPosition);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("UpdateActivity", "Failed to load therapy data: " + databaseError.getMessage());
+            }
+        });
+    }
+
 }
+

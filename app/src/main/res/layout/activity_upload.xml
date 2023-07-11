@@ -47,7 +47,6 @@
             android:textSize="17dp"
             android:gravity="center"
             android:inputType="date"
-
             android:minHeight="48dp"
             android:textColor="@color/grey"
             android:background="@drawable/lavender_border"
@@ -55,15 +54,7 @@
 
         <Spinner
             android:id="@+id/therapy_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-
-
-
-        <EditText
-            android:id="@+id/therapy_input"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:ems="12"
@@ -75,7 +66,7 @@
             android:minHeight="48dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/lavender_border"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText"/>
 
 
         <EditText
