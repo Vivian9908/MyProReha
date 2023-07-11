@@ -53,7 +53,7 @@ public class DetailActivity extends AppCompatActivity {
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users/016093213131/MeineStundenzettel");
+                final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("MeineStundenzettel");
 
                 reference.child(key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -62,7 +62,7 @@ public class DetailActivity extends AppCompatActivity {
                         // Now, delete the file from Firebase Storage
 
                         FirebaseStorage storage = FirebaseStorage.getInstance();
-                        StorageReference storageReference = storage.getReference().child("users/016093213131/MeineStundenzettel");
+                        StorageReference storageReference = storage.getReference().child("MeineStundenzettel");
 
                         storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override

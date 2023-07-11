@@ -20,14 +20,21 @@
         <activity
             android:name=".UpdateActivity"
             android:exported="false"
+<<<<<<< Updated upstream
             android:parentActivityName=".MainActivity" />
+=======
+            android:label="@string/app_update"
+            android:parentActivityName=".MainActivity"/>
+>>>>>>> Stashed changes
         <activity
             android:name=".DetailActivity"
             android:exported="false"
+            android:label="@string/app_sz"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".UploadActivity"
             android:exported="false"
+            android:label="@string/app_upload"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".Register"
@@ -36,6 +43,7 @@
         <activity
             android:name=".YourProfile"
             android:exported="false"
+            android:label="@string/app_account"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".Login"
@@ -49,6 +57,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
+            android:label="@string/app_noname"
             android:exported="true" />
     </application>
 

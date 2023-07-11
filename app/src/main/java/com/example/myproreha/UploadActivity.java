@@ -47,7 +47,7 @@ public class UploadActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://myproreha-default-rtdb.firebaseio.com");
 
-    DatabaseReference parentNodeRef = databaseReference.child("users/016093213131/MeineStundenzettel");
+    DatabaseReference parentNodeRef = databaseReference.child("users/");
     DatabaseReference newChildRef = parentNodeRef.push();
 
     Button saveButton;

@@ -1,5 +1,10 @@
 <resources>
-    <string name="app_name">MyProReha</string>
+    <string name="app_name">ProReha</string>
+    <string name="app_noname"></string>
+    <string name="app_sz">Info</string>
+    <string name="app_update">Bearbeiten</string>
+    <string name="app_upload">Erstellen</string>
+    <string name="app_account">Account Informationen</string>
     <string name="already_have_an_account">Already have an account</string>
     <string name="register">Register</string>
 </resources>

@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.prorehalogosmall);
         setContentView(R.layout.activity_main);
 
         fab = findViewById(R.id.fab);
@@ -58,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         MyAdapter adapter = new MyAdapter(MainActivity.this, dataList);
         recyclerView.setAdapter(adapter);
-        databaseReference = FirebaseDatabase.getInstance().getReference("users/016093213131/MeineStundenzettel");
+        databaseReference = FirebaseDatabase.getInstance().getReference("users/12/MeineStundenzettel");
 
         dialog.show();
 
