@@ -63,10 +63,11 @@ public class UpdateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_update);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        loadTherapyData();
+        //loadTherapyData();
 
         updateButton = findViewById(R.id.updateBtn);
-        therapySpinner = findViewById(R.id.therapySpinner);
+        //therapySpinner = findViewById(R.id.therapySpinner);
+        updateTitle= findViewById(R.id.update_title);
         updateDate = findViewById(R.id.update_date);
         updateDuration = findViewById(R.id.update_duration);
         updateNotes = findViewById(R.id.update_notes);
@@ -125,9 +126,10 @@ public class UpdateActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
 
-            String therapyValue = bundle.getString("Title");
+           /* String therapyValue = bundle.getString("Title");
             int therapyIndex = getTherapyIndex(therapyValue);
-            therapySpinner.setSelection(therapyIndex);
+            therapySpinner.setSelection(therapyIndex);*/
+            updateTitle.setText(bundle.getString("Title"));
             updateDate.setText(bundle.getString("Date"));
             updateDuration.setText(bundle.getString("Duration"));
             updateNotes.setText(bundle.getString("Notes"));
@@ -135,7 +137,7 @@ public class UpdateActivity extends AppCompatActivity {
 
 
         }
-        databaseReference = FirebaseDatabase.getInstance().getReference("users/016093213131/MeineStundenzettel").child(key);
+        databaseRef = FirebaseDatabase.getInstance().getReference("users/"+ GlobalVariables.currentUser +"/therapies").child(key);
 
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,18 +153,19 @@ public class UpdateActivity extends AppCompatActivity {
     public void updateData() {
 
 
-        String therapy = therapySpinner.getSelectedItem().toString();
+        //String therapy = therapySpinner.getSelectedItem().toString();
+        title= updateTitle.getText().toString();
         date = updateDate.getText().toString().trim();
         duration = updateDuration.getText().toString();
         notes = updateNotes.getText().toString();
-        DataClass2 dataClass = new DataClass2(date, therapy, duration, notes);
-        databaseReference.setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
+        DataClass2 dataClass = new DataClass2(date, title, duration, notes);
+        databaseRef.setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
 
                     FirebaseStorage storage = FirebaseStorage.getInstance();
-                    StorageReference reference = storage.getReference().child("users/016093213131/MeineStundenzettel");
+                    StorageReference reference = storage.getReference().child("users/"+GlobalVariables.currentUser+"/therapies");
                     reference.delete();
 
                     Toast.makeText(UpdateActivity.this, "Updated", Toast.LENGTH_SHORT).show();
@@ -177,7 +180,7 @@ public class UpdateActivity extends AppCompatActivity {
         });
     }
 
-    private void loadTherapyData() {
+    /*private void loadTherapyData() {
         DatabaseReference therapyRef = databaseRef.child("Therapy");
 
         therapyRef.addValueEventListener(new ValueEventListener() {
@@ -215,7 +218,7 @@ public class UpdateActivity extends AppCompatActivity {
             }
         }
         return 0; // Default index if therapyValue is not found
-    }
+    }*/
 
 
 }

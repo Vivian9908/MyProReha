@@ -53,11 +53,12 @@
                 android:background="@drawable/lavender_border"
                 tools:ignore="HardcodedText,MissingConstraints" />
 
-            <!--<EditText
+            <EditText
                 android:id="@+id/update_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
+                android:gravity="center"
                 android:ems="12"
                 android:text="Therapie"
                 android:textColor="@color/grey"
@@ -66,9 +67,9 @@
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/lavender_border"
                 tools:ignore="HardcodedText"/>
-            -->
 
-            <Spinner
+
+            <!--<Spinner
                 android:id="@+id/therapySpinner"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
@@ -83,6 +84,7 @@
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/lavender_border"
                 tools:ignore="HardcodedText"/>
+-->
 
             <EditText
                 android:id="@+id/update_duration"
