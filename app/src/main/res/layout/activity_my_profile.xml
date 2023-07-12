@@ -158,20 +158,20 @@
 
     </androidx.cardview.widget.CardView>
 
-<RelativeLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/deleteBtn"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="40dp"
+        app:fab_size="normal"
         android:backgroundTint="@color/red"
         android:src="@drawable/ic_delete"
-        app:tint="@color/white" />
+        app:tint="@color/white"
+        android:contentDescription="TODO" />
 
-</RelativeLayout>
+
 
 </LinearLayout>
 
