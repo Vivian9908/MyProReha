@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -66,7 +67,7 @@ public class UpdateActivity extends AppCompatActivity {
         loadTherapyData();
 
         updateButton = findViewById(R.id.updateBtn);
-        therapySpinner = findViewById(R.id.therapy_spinner);
+        therapySpinner = findViewById(R.id.therapy_spinner2);
         updateDate = findViewById(R.id.update_date);
         updateDuration = findViewById(R.id.update_duration);
         updateNotes = findViewById(R.id.update_notes);
@@ -124,15 +125,25 @@ public class UpdateActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
+            // Erst das Key-Attribut aus dem Bundle abrufen
+            key = bundle.getString("Key");
+            therapy = bundle.getString("Therapy"); // Get the therapy value from the bundle
 
+            // Setze die Therapieauswahl im Spinner
+            int therapyPosition = -1;
+            if (therapy != null) {
+                ArrayAdapter<String> adapter = (ArrayAdapter<String>) therapySpinner.getAdapter();
+                therapyPosition = adapter.getPosition(therapy);
+            }
+            if (therapyPosition != -1) {
+                therapySpinner.setSelection(therapyPosition);
+            }
 
             updateDate.setText(bundle.getString("Date"));
             updateDuration.setText(bundle.getString("Duration"));
             updateNotes.setText(bundle.getString("Notes"));
-            key = bundle.getString("Key");
-
-
         }
+
         databaseRef = FirebaseDatabase.getInstance().getReference("users/"+ GlobalVariables.currentUser +"/therapies").child(key);
 
         updateButton.setOnClickListener(new View.OnClickListener() {
@@ -182,6 +193,7 @@ public class UpdateActivity extends AppCompatActivity {
 
     private void loadTherapyData() {
         DatabaseReference therapyRef = databaseRef.child("therapy");
+
         therapyRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -190,20 +202,48 @@ public class UpdateActivity extends AppCompatActivity {
                     String therapyName = snapshot.getKey();
                     therapyList.add(therapyName);
                 }
+
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(UpdateActivity.this,
                         android.R.layout.simple_spinner_item, therapyList);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 therapySpinner.setAdapter(adapter);
-                // Optional: Set initial selection
-                int initialPosition = adapter.getPosition("Wähle eine Therapie");
-                therapySpinner.setSelection(initialPosition);
+
+                // Set initial selection
+                if (therapy != null && adapter != null) {
+                    int initialPosition = adapter.getPosition(therapy);
+                    therapySpinner.setSelection(initialPosition);
+                }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e("UpdateActivity", "Failed to load therapy data: " + databaseError.getMessage());
             }
         });
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to go back without saving changes?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                UpdateActivity.super.onBackPressed();
+            }
+        });
+        builder.setNegativeButton("No", null);
+        builder.show();
+    }
+
+
+
 
 
 

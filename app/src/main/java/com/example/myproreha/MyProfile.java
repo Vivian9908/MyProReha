@@ -17,6 +17,15 @@ public class MyProfile extends AppCompatActivity {
         profileName= findViewById(R.id.profileName);
         profileMail=findViewById(R.id.profileMail);
 
+        Bundle bundle = getIntent().getExtras();
+
+        if(bundle != null){
+            profileName.setText(bundle.getString("Title"));
+            profileMail.setText(bundle.getString("Date"));
+
+        }
+
+
 
 
 
