@@ -73,6 +73,7 @@ public class MyProfile extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("users/" + GlobalVariables.currentUser);
 
+
         profileName = findViewById(R.id.profileName);
         profileMail = findViewById(R.id.profileMail);
         deleteBtn = findViewById(R.id.deleteBtn);
@@ -89,14 +90,30 @@ public class MyProfile extends AppCompatActivity {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String dataFullname = dataSnapshot.child("/dataFullname").getValue(String.class);
+                    profileName.setText(dataFullname);
+                    String dataEmail = dataSnapshot.child("/dataEmail").getValue(String.class);
+                    profileMail.setText(dataEmail);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle Fehler beim Datenbankzugriff
+            }
+        });
+
+        databaseReference.child("therapies").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 int sumDuration = 0; // Initialize sumDuration variable
                 for (DataSnapshot itemSnapshot : dataSnapshot.getChildren()) {
-                    String dataDuration = itemSnapshot.child( "/therapies").child("/dataDuration").getValue(String.class);
+                    String dataDuration = itemSnapshot.child( "dataDuration").getValue(String.class);
                     Log.e("UpdateActivity", "Failed to load therapy data" + dataDuration);
                    int duration = Integer.valueOf(dataDuration); // Convert dataDuration to int
                     sumDuration += duration; // Add duration to sumDuration
                 }
-                sum.setText(String.valueOf(sumDuration)); // Set the sumDuration as text in the sum TextView
+                sum.setText(String.valueOf(sumDuration) + " Minuten"); // Set the sumDuration as text in the sum TextView
             }
 
             @Override
