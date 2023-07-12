@@ -85,13 +85,6 @@ public class Login extends AppCompatActivity {
                         reference = FirebaseDatabase.getInstance().getReference("users");
 
                         GlobalVariables.currentUser = user1.getUid().toString();
-
-
-
-                        //UserHelperClass helperClass = new UserHelperClass(user,pass);
-                        //Log.d("hallo","helperClass:"+ helperClass);
-                        //reference.child(GlobalVariables.currentUser).setValue(helperClass);
-
                         startActivity(new Intent(Login.this, MainActivity.class));
                         Toast.makeText(Login.this, "Login sucess", Toast.LENGTH_SHORT).show();
 

@@ -119,7 +119,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/lavender_border"
+            android:background="@drawable/orange_border"
             android:gravity="left"
             android:orientation="vertical"
             android:padding="10dp">
