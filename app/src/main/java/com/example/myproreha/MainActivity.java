@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     List<DataClass2> dataList;
     DatabaseReference databaseReference;
+    DatabaseReference userReference;
     ValueEventListener eventListener;
 
 
@@ -62,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
         MyAdapter adapter = new MyAdapter(MainActivity.this, dataList);
         recyclerView.setAdapter(adapter);
         databaseReference = FirebaseDatabase.getInstance().getReference("users/" + GlobalVariables.currentUser + "/therapies");
+        userReference = FirebaseDatabase.getInstance().getReference("users/" + GlobalVariables.currentUser);
+
 
         dialog.show();
 
@@ -96,7 +99,22 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        userReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String fullName = snapshot.child("dataFullname").getValue(String.class);
+                    setTitle("    " + fullName);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Error handling, if needed
+            }
+        });
     }
+
+
 
 
     @Override
