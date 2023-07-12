@@ -51,7 +51,7 @@ public class UploadActivity extends AppCompatActivity {
     DatabaseReference newChildRef = parentNodeRef.push();
 
     Button saveButton;
-    EditText  uploadDuration, uploadNotes;
+    EditText uploadDuration, uploadNotes;
     TextView uploadDate;
     Spinner therapySpinner;
 
@@ -66,7 +66,7 @@ public class UploadActivity extends AppCompatActivity {
         uploadDuration = findViewById(R.id.duration_input);
         uploadNotes = findViewById(R.id.notes_input);
         saveButton = findViewById(R.id.add_Button);
-       therapySpinner = findViewById(R.id.therapy_spinner);
+        therapySpinner = findViewById(R.id.therapy_spinner);
 
         loadTherapyData();
 
@@ -126,39 +126,36 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     public void uploadData() {
-
-
-        newChildRef.child("Therapies").setValue("Stundenzettel");
-
         String date = uploadDate.getText().toString();
         String duration = uploadDuration.getText().toString();
         String therapy = therapySpinner.getSelectedItem().toString();
         String notes = uploadNotes.getText().toString();
+
+
+        if (date.isEmpty() || duration.isEmpty() || therapy.isEmpty() || notes.isEmpty()) {
+            Toast.makeText(UploadActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        newChildRef.child("Therapies").setValue("Stundenzettel");
         DataClass2 dataClass = new DataClass2(date, therapy, duration, notes);
 
-
-        //String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
-
-
-
-            newChildRef
-                    .setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(UploadActivity.this, "Saved", Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(UploadActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+        newChildRef.setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(UploadActivity.this, "Saved", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(UploadActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
-
     }
 
     private void loadTherapyData() {

@@ -140,32 +140,34 @@ public class UpdateActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 updateData();
-                Intent intent = new Intent(UpdateActivity.this, MainActivity.class);
-                startActivity(intent);
+
             }
         });
     }
 
     public void updateData() {
-
-
-        //String therapy = therapySpinner.getSelectedItem().toString();
-        String therapy = therapySpinner.getSelectedItem().toString();;
+        String therapy = therapySpinner.getSelectedItem().toString();
         date = updateDate.getText().toString().trim();
         duration = updateDuration.getText().toString();
         notes = updateNotes.getText().toString();
+
+        // Check if any of the fields are empty
+        if (therapy.isEmpty() || date.isEmpty() || duration.isEmpty() || notes.isEmpty()) {
+            Toast.makeText(UpdateActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            return; // Return without updating the data
+        }
+
         DataClass2 dataClass = new DataClass2(date, therapy, duration, notes);
+
         databaseRef.setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-
                     FirebaseStorage storage = FirebaseStorage.getInstance();
-                    StorageReference reference = storage.getReference().child("users/"+GlobalVariables.currentUser+"/therapies");
+                    StorageReference reference = storage.getReference().child("users/" + GlobalVariables.currentUser + "/therapies");
                     reference.delete();
 
                     Toast.makeText(UpdateActivity.this, "Updated", Toast.LENGTH_SHORT).show();
-                    finish();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -175,6 +177,7 @@ public class UpdateActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void loadTherapyData() {
         DatabaseReference therapyRef = databaseRef.child("therapy");

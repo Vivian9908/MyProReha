@@ -18,7 +18,9 @@
         <activity
             android:name=".UpdateActivity"
             android:exported="false"
-            android:label="@string/app_update" />
+            android:label="@string/app_update"
+            android:parentActivityName=".DetailActivity"
+            />
         <activity
             android:name=".DetailActivity"
             android:exported="false"
