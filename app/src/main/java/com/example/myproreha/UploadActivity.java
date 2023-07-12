@@ -5,14 +5,17 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -134,7 +137,7 @@ public class UploadActivity extends AppCompatActivity {
         String notes = uploadNotes.getText().toString();
 
 
-        if (date.isEmpty() || duration.isEmpty() || therapy.isEmpty() || notes.isEmpty()) {
+        if (date.isEmpty() || duration.isEmpty() || therapy.isEmpty() || notes.isEmpty() || therapy.equals("Wähle eine Therapie")) {
             Toast.makeText(UploadActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -167,20 +170,36 @@ public class UploadActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<String> therapyList = new ArrayList<>();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                therapyList.add("Wähle eine Therapie");
 
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String therapyName = snapshot.getKey();
                     therapyList.add(therapyName);
                 }
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(UploadActivity.this,
-                        android.R.layout.simple_spinner_item, therapyList);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(UploadActivity.this,
+                        android.R.layout.simple_spinner_item, therapyList) {
+                    @Override
+                    public View getView(int position, View convertView, ViewGroup parent) {
+                        View view = super.getView(position, convertView, parent);
+                        TextView textView = (TextView) view;
+                        if (position == 0) {
+                            // Setze die Textfarbe des initialen Texts auf "green1"
+                            textView.setTextColor(getResources().getColor(R.color.green1));
+                            Drawable icDrop = getResources().getDrawable(R.drawable.ic_drop);
+                            icDrop.setBounds(0, 0, icDrop.getIntrinsicWidth(), icDrop.getIntrinsicHeight());
+                            textView.setCompoundDrawables(null, null, icDrop, null);
+                            textView.setCompoundDrawablePadding(8);
+                        } else {
+                            // Setze die normale Textfarbe für andere Elemente
+                            textView.setTextColor(getResources().getColor(android.R.color.black));
+                        }
+                        return view;
+                    }
+                };
+
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 therapySpinner.setAdapter(adapter);
-
-                String initialText = "Wähle eine Therapie";
-                int initialPosition = adapter.getPosition(initialText);
-                therapySpinner.setSelection(initialPosition);
             }
 
             @Override
@@ -189,6 +208,4 @@ public class UploadActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }

@@ -7,4 +7,5 @@
     <string name="app_account">Account Informationen</string>
     <string name="already_have_an_account">Already have an account</string>
     <string name="register">Register</string>
+    <string name="mein_stundenzettel">Mein Stundenzettel</string>
 </resources>

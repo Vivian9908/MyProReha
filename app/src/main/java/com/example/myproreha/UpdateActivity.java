@@ -157,7 +157,7 @@ public class UpdateActivity extends AppCompatActivity {
         notes = updateNotes.getText().toString();
 
         // Check if any of the fields are empty
-        if (therapy.isEmpty() || date.isEmpty() || duration.isEmpty() || notes.isEmpty()) {
+        if (therapy.isEmpty() || date.isEmpty() || duration.isEmpty() || notes.isEmpty() || therapy.equals("Wähle eine Therapie")) {
             Toast.makeText(UpdateActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return; // Return without updating the data
         }
