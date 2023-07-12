@@ -46,7 +46,7 @@ public class UpdateActivity extends AppCompatActivity {
     Button updateButton;
     EditText updateDuration, updateNotes;
     TextView updateDate;
-    String date, duration, notes;
+    String therapy, date, duration, notes;
     String key;
     Uri uri;
 
@@ -146,7 +146,8 @@ public class UpdateActivity extends AppCompatActivity {
     }
 
     public void updateData() {
-        String therapy = therapySpinner.getSelectedItem().toString();
+
+        therapy = therapySpinner.getSelectedItem().toString();
         date = updateDate.getText().toString().trim();
         duration = updateDuration.getText().toString();
         notes = updateNotes.getText().toString();

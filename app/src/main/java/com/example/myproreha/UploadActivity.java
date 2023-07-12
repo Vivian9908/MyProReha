@@ -126,6 +126,8 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     public void uploadData() {
+
+
         String date = uploadDate.getText().toString();
         String duration = uploadDuration.getText().toString();
         String therapy = therapySpinner.getSelectedItem().toString();
