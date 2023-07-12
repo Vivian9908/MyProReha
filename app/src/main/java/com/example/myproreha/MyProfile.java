@@ -35,6 +35,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
 
+import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +44,7 @@ import java.util.UUID;
 public class MyProfile extends AppCompatActivity {
 
     DatabaseReference databaseReference;
-    TextView profileName, profileMail, sum;
+    TextView profileName, profileMail, time;
     FloatingActionButton deleteBtn;
     private ActivityResultLauncher<Intent> launcher;
 
@@ -76,7 +77,7 @@ public class MyProfile extends AppCompatActivity {
         profileName = findViewById(R.id.profileName);
         profileMail = findViewById(R.id.profileMail);
         deleteBtn = findViewById(R.id.deleteBtn);
-        sum = findViewById(R.id.sum);
+        time = findViewById(R.id.sum);
         profilePic = findViewById(R.id.imageView2);
 
         profilePic.setOnClickListener(new View.OnClickListener() {
@@ -106,14 +107,17 @@ public class MyProfile extends AppCompatActivity {
         databaseReference.child("therapies").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int sumDuration = 0; // Initialize sumDuration variable
+                int sumDuration = 0; // Initialisiere die Variable sumDuration
                 for (DataSnapshot itemSnapshot : dataSnapshot.getChildren()) {
                     String dataDuration = itemSnapshot.child("dataDuration").getValue(String.class);
                     Log.e("UpdateActivity", "Failed to load therapy data" + dataDuration);
-                    int duration = Integer.valueOf(dataDuration); // Convert dataDuration to int
-                    sumDuration += duration; // Add duration to sumDuration
+                    int duration = Integer.valueOf(dataDuration); // Konvertiere dataDuration in einen int-Wert
+                    sumDuration += duration; // Addiere die Dauer zur Summe hinzu
                 }
-                sum.setText(String.valueOf(sumDuration) + " Minuten"); // Set the sumDuration as text in the sum TextView
+                int hours = sumDuration / 60; // Berechne die Stunden
+                int minutes = sumDuration % 60; // Berechne die verbleibenden Minuten
+                String timeString = hours + " Stunden " + minutes + " Minuten"; // Erstelle einen String mit Stunden und Minuten
+                time.setText(timeString); // Setze den String in das TextView "time" ein
             }
 
             @Override
