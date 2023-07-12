@@ -93,7 +93,7 @@ public class Login extends AppCompatActivity {
                         //reference.child(GlobalVariables.currentUser).setValue(helperClass);
 
                         startActivity(new Intent(Login.this, MainActivity.class));
-                        Toast.makeText(Login.this, "Login sucess"+GlobalVariables.currentUser, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Login.this, "Login sucess", Toast.LENGTH_SHORT).show();
 
                     }
                     else{
