@@ -112,9 +112,7 @@
         android:layout_margin="40dp"
         android:backgroundTint="@color/red"
         android:src="@drawable/ic_delete"
-        android:tint="@color/white"
-        app:fab_showShadow="true"
-        app:fab_size="mini"
+        app:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
