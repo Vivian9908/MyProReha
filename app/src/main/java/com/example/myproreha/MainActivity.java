@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.profile){
 
-            startActivity(new Intent(MainActivity.this, YourProfile.class));
+            startActivity(new Intent(MainActivity.this, MyProfile.class));
 
         } else if (id == R.id.logout){
 
