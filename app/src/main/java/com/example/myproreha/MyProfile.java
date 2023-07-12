@@ -170,25 +170,9 @@ public class MyProfile extends AppCompatActivity {
 
     }
 
-    private void choosePicture() {
 
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(intent.ACTION_GET_CONTENT);
-        launcher.launch(intent);
 
-    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            imageUri = data.getData();
-            profilePic.setImageURI(imageUri);
-            uploadPicture(imageUri);
-
-        }
-    }
 
     private void uploadPicture(Uri imageUri) {
         // Erstelle einen Dateinamen für das Bild basierend auf dem aktuellen Zeitstempel
@@ -221,6 +205,26 @@ public class MyProfile extends AppCompatActivity {
                     // Zeige eine Fehlermeldung an
                     Toast.makeText(getApplicationContext(), "Fehler beim Hochladen des Bildes.", Toast.LENGTH_SHORT).show();
                 });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            imageUri = data.getData();
+            profilePic.setImageURI(imageUri);
+            uploadPicture(imageUri);
+
+        }
+    }
+
+    private void choosePicture() {
+
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(intent.ACTION_GET_CONTENT);
+        launcher.launch(intent);
+
     }
 
 
