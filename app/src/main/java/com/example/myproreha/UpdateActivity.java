@@ -188,6 +188,7 @@ public class UpdateActivity extends AppCompatActivity {
                 Toast.makeText(UpdateActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
             }
         });
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
     }
 
 

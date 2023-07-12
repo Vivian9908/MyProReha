@@ -38,7 +38,7 @@ public class YourProfile extends AppCompatActivity {
         setContentView(R.layout.activity_your_profile);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child("12");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("users" + GlobalVariables.currentUser);
 
         account = findViewById(R.id.account);
         fullname = findViewById(R.id.fullname);
@@ -55,8 +55,8 @@ public class YourProfile extends AppCompatActivity {
                     GenericTypeIndicator<HashMap<String, Object>> typeIndicator = new GenericTypeIndicator<HashMap<String, Object>>() {};
                     HashMap<String, Object> data = dataSnapshot.getValue(typeIndicator);
                     String fullnameValue = "";
-                    if (data.containsKey("email")) {
-                        fullnameValue = data.get("email").toString();
+                    if (data.containsKey("dataFullname")) {
+                        fullnameValue = data.get("dataFullname").toString();
                     }
                     fullname.setText(fullnameValue);
                 }
