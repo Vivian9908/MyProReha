@@ -64,7 +64,6 @@ public class UpdateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_update);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        loadTherapyData();
 
         updateButton = findViewById(R.id.updateBtn);
         therapySpinner = findViewById(R.id.therapy_spinner2);
@@ -72,6 +71,7 @@ public class UpdateActivity extends AppCompatActivity {
         updateDuration = findViewById(R.id.update_duration);
         updateNotes = findViewById(R.id.update_notes);
 
+        loadTherapyData();
 
         updateDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,28 +123,21 @@ public class UpdateActivity extends AppCompatActivity {
                 });
 
 
+        //...
+
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             // Erst das Key-Attribut aus dem Bundle abrufen
             key = bundle.getString("Key");
-            therapy = bundle.getString("Therapy"); // Get the therapy value from the bundle
-
-            // Setze die Therapieauswahl im Spinner
-            int therapyPosition = -1;
-            if (therapy != null) {
-                ArrayAdapter<String> adapter = (ArrayAdapter<String>) therapySpinner.getAdapter();
-                therapyPosition = adapter.getPosition(therapy);
-            }
-            if (therapyPosition != -1) {
-                therapySpinner.setSelection(therapyPosition);
-            }
-
+            therapy = bundle.getString("Title"); // Get the therapy value from the bundle
             updateDate.setText(bundle.getString("Date"));
             updateDuration.setText(bundle.getString("Duration"));
             updateNotes.setText(bundle.getString("Notes"));
         }
 
-        databaseRef = FirebaseDatabase.getInstance().getReference("users/"+ GlobalVariables.currentUser +"/therapies").child(key);
+
+
+        databaseRef = FirebaseDatabase.getInstance().getReference("users/" + GlobalVariables.currentUser + "/therapies").child(key);
 
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -241,10 +234,6 @@ public class UpdateActivity extends AppCompatActivity {
         builder.setNegativeButton("No", null);
         builder.show();
     }
-
-
-
-
 
 
 }
