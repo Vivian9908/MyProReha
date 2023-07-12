@@ -11,10 +11,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -192,13 +194,34 @@ public class UpdateActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<String> therapyList = new ArrayList<>();
+                therapyList.add("Wähle eine Therapie");
+
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String therapyName = snapshot.getKey();
                     therapyList.add(therapyName);
                 }
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(UpdateActivity.this,
-                        android.R.layout.simple_spinner_item, therapyList);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(UpdateActivity.this,
+                        android.R.layout.simple_spinner_item, therapyList){
+                    @Override
+                    public View getView(int position, View convertView, ViewGroup parent) {
+                        View view = super.getView(position, convertView, parent);
+                        TextView textView = (TextView) view;
+                        if (position == 0) {
+                            // Setze die Textfarbe des initialen Texts auf "green1"
+                            textView.setTextColor(getResources().getColor(R.color.green1));
+                            Drawable icDrop = getResources().getDrawable(R.drawable.ic_drop);
+                            icDrop.setBounds(0, 0, icDrop.getIntrinsicWidth(), icDrop.getIntrinsicHeight());
+                            textView.setCompoundDrawables(null, null, icDrop, null);
+                            textView.setCompoundDrawablePadding(8);
+                        } else {
+                            // Setze die normale Textfarbe für andere Elemente
+                            textView.setTextColor(getResources().getColor(android.R.color.black));
+                        }
+                        return view;
+                    }
+                };
+
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 therapySpinner.setAdapter(adapter);
 
