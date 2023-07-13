@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -113,16 +115,34 @@ public class MyProfile extends AppCompatActivity {
                 final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users/" + GlobalVariables.currentUser);
 
                 reference.removeValue().addOnSuccessListener(unused -> {
+                    // Benutzerdaten erfolgreich aus der Realtime Database gelöscht
 
-                    FirebaseStorage storage1 = FirebaseStorage.getInstance();
-                    StorageReference fileReference = storage1.getReference("users/" + GlobalVariables.currentUser);
+                    // Firebase Authentication: Den Benutzer löschen
+                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                    if (currentUser != null) {
+                        currentUser.delete().addOnSuccessListener(unused1 -> {
+                            // Benutzer erfolgreich aus Firebase Authentication gelöscht
 
-                    fileReference.delete().addOnSuccessListener(unused1 -> {
-                        Toast.makeText(MyProfile.this, "Gelöscht", Toast.LENGTH_SHORT).show();
-                        finish();
-                    });
+                            FirebaseStorage firestorage = FirebaseStorage.getInstance();
+                            StorageReference fileReference = firestorage.getReference("users/" + GlobalVariables.currentUser);
+
+                            fileReference.delete().addOnSuccessListener(unused2 -> {
+                                // Benutzerbild erfolgreich aus dem Speicher gelöscht
+
+                                Toast.makeText(MyProfile.this, "Konto gelöscht", Toast.LENGTH_SHORT).show();
+                                // Starte die Login-Seite hier, nachdem alle Löschoperationen abgeschlossen wurden
+                                startActivity(new Intent(getApplicationContext(), Login.class));
+                                finish();
+                            });
+                        }).addOnFailureListener(e -> {
+                            // Fehler beim Löschen des Benutzers aus Firebase Authentication
+                            Toast.makeText(MyProfile.this, "Fehler beim Löschen des Kontos", Toast.LENGTH_SHORT).show();
+                        });
+                    } else {
+                        // Aktueller Benutzer ist null (nicht angemeldet)
+                        Toast.makeText(MyProfile.this, "Nicht angemeldet", Toast.LENGTH_SHORT).show();
+                    }
                 });
-                startActivity(new Intent(getApplicationContext(), Login.class));
             });
 
             builder.setNegativeButton("Nein", (dialog, which) -> {
@@ -132,14 +152,14 @@ public class MyProfile extends AppCompatActivity {
             AlertDialog dialog = builder.create();
             dialog.show();
         });
-
     }
 
 
 
 
 
-    private void uploadPicture(Uri imageUri) {
+
+        private void uploadPicture(Uri imageUri) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MyProfile.this);
         builder.setView(R.layout.progress_layout);
 
