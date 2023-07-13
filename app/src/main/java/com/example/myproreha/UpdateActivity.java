@@ -1,15 +1,9 @@
 package com.example.myproreha;
 
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
-import android.content.DialogInterface;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,11 +15,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,6 +31,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 import java.util.TimeZone;
 
 public class UpdateActivity extends AppCompatActivity {
@@ -46,20 +41,18 @@ public class UpdateActivity extends AppCompatActivity {
     TextView updateDate;
     String therapy, date, duration, notes;
     String key;
-    Uri uri;
-
-    DatabaseReference databaseReference;
 
     Spinner therapySpinner;
 
     DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://myproreha-default-rtdb.firebaseio.com");
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
 
         updateButton = findViewById(R.id.updateBtn);
@@ -71,54 +64,28 @@ public class UpdateActivity extends AppCompatActivity {
 
         loadTherapyData();
 
-        updateDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Calendar cldr = Calendar.getInstance();
-                int day = cldr.get(Calendar.DAY_OF_MONTH);
-                int month = cldr.get(Calendar.MONTH);
-                int year = cldr.get(Calendar.YEAR);
+        updateDate.setOnClickListener(v -> {
 
-                MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
-                builder.setTitleText("Select date");
-                builder.setSelection(MaterialDatePicker.todayInUtcMilliseconds());
-                builder.setTheme(R.style.ThemeOverlay_App_DatePicker);
-                MaterialDatePicker<Long> datePicker = builder.build();
+            MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
+            builder.setTitleText("Select date");
+            builder.setSelection(MaterialDatePicker.todayInUtcMilliseconds());
+            builder.setTheme(R.style.ThemeOverlay_App_DatePicker);
+            MaterialDatePicker<Long> datePicker = builder.build();
 
 
-                datePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
-                    @Override
-                    public void onPositiveButtonClick(Long selection) {
-                        Calendar selectedDate = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-                        selectedDate.setTimeInMillis(selection);
+            datePicker.addOnPositiveButtonClickListener(selection -> {
+                Calendar selectedDate = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+                selectedDate.setTimeInMillis(selection);
 
-                        int selectedDay = selectedDate.get(Calendar.DAY_OF_MONTH);
-                        int selectedMonth = selectedDate.get(Calendar.MONTH);
-                        int selectedYear = selectedDate.get(Calendar.YEAR);
+                int selectedDay = selectedDate.get(Calendar.DAY_OF_MONTH);
+                int selectedMonth = selectedDate.get(Calendar.MONTH);
+                int selectedYear = selectedDate.get(Calendar.YEAR);
 
-                        updateDate.setText(selectedDay + "." + (selectedMonth + 1) + "." + selectedYear);
-                    }
-                });
+                updateDate.setText(selectedDay + "." + (selectedMonth + 1) + "." + selectedYear);
+            });
 
-                datePicker.show(getSupportFragmentManager(), "DatePicker");
-            }
+            datePicker.show(getSupportFragmentManager(), "DatePicker");
         });
-
-
-        /*ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == Activity.RESULT_OK) {
-                            Intent data = result.getData();
-                            uri = data.getData();
-                        } else {
-                            Toast.makeText(UpdateActivity.this, "Brot", Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });*/
 
 
         Bundle bundle = getIntent().getExtras();
@@ -134,14 +101,7 @@ public class UpdateActivity extends AppCompatActivity {
 
         databaseRef = FirebaseDatabase.getInstance().getReference("users/" + GlobalVariables.currentUser + "/therapies").child(key);
 
-        updateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                updateData();
-
-            }
-        });
+        updateButton.setOnClickListener(v -> updateData());
     }
 
     public void updateData() {
@@ -159,23 +119,15 @@ public class UpdateActivity extends AppCompatActivity {
 
         DataClass2 dataClass = new DataClass2(date, therapy, duration, notes);
 
-        databaseRef.setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    FirebaseStorage storage = FirebaseStorage.getInstance();
-                    StorageReference reference = storage.getReference().child("users/" + GlobalVariables.currentUser + "/therapies");
-                    reference.delete();
+        databaseRef.setValue(dataClass).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                StorageReference reference = storage.getReference().child("users/" + GlobalVariables.currentUser + "/therapies");
+                reference.delete();
 
-                    Toast.makeText(UpdateActivity.this, "Updated", Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(UpdateActivity.this, "Updated", Toast.LENGTH_SHORT).show();
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(UpdateActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        }).addOnFailureListener(e -> Toast.makeText(UpdateActivity.this, Objects.requireNonNull(e.getMessage()), Toast.LENGTH_SHORT).show());
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
     }
 
@@ -202,7 +154,7 @@ public class UpdateActivity extends AppCompatActivity {
                         TextView textView = (TextView) view;
                         if (position == 0) {
                             textView.setTextColor(getResources().getColor(R.color.green1));
-                            Drawable icDrop = getResources().getDrawable(R.drawable.ic_drop);
+                            @SuppressLint("UseCompatLoadingForDrawables") Drawable icDrop = getResources().getDrawable(R.drawable.ic_drop);
                             icDrop.setBounds(0, 0, icDrop.getIntrinsicWidth(), icDrop.getIntrinsicHeight());
                             textView.setCompoundDrawables(null, null, icDrop, null);
                             textView.setCompoundDrawablePadding(8);
@@ -217,7 +169,7 @@ public class UpdateActivity extends AppCompatActivity {
                 therapySpinner.setAdapter(adapter);
 
                 // Set initial selection
-                if (therapy != null && adapter != null) {
+                if (therapy != null) {
                     int initialPosition = adapter.getPosition(therapy);
                     therapySpinner.setSelection(initialPosition);
                 }
@@ -240,12 +192,7 @@ public class UpdateActivity extends AppCompatActivity {
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Bist du sicher das du ohne Änderungen zurückgehen möchtest?");
-        builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                UpdateActivity.super.onBackPressed();
-            }
-        });
+        builder.setPositiveButton("Ja", (dialog, which) -> UpdateActivity.super.onBackPressed());
         builder.setNegativeButton("Nein", null);
         builder.show();
     }

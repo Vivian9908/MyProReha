@@ -43,7 +43,7 @@ public class DetailActivity extends AppCompatActivity {
         if (bundle != null) {
             detailTitle.setText(bundle.getString("Title"));
             detailDate.setText(bundle.getString("Date"));
-            detailDuration.setText(bundle.getString("Duration") + " Minuten");
+            detailDuration.setText(bundle.getString("Duration"));
             detailNotes.setText(bundle.getString("Notes"));
             key = bundle.getString("Key");
         }
