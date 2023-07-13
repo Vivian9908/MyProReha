@@ -248,7 +248,7 @@ public class UpdateActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Bist du sicher das du ohne Änderungen zurück gehen möchtest?");
+        builder.setMessage("Bist du sicher das du ohne Änderungen zurückgehen möchtest?");
         builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
