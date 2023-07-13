@@ -1,23 +1,21 @@
 package com.example.myproreha;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import org.w3c.dom.Text;
+import java.util.Objects;
+
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -26,11 +24,12 @@ public class DetailActivity extends AppCompatActivity {
 
     String key = "";
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         detailTitle = findViewById(R.id.detailTitle);
         detailDate = findViewById(R.id.detailDate);
@@ -41,54 +40,42 @@ public class DetailActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
 
-        if(bundle != null){
+        if (bundle != null) {
             detailTitle.setText(bundle.getString("Title"));
             detailDate.setText(bundle.getString("Date"));
-            detailDuration.setText(bundle.getString("Duration"));
+            detailDuration.setText(bundle.getString("Duration") + " Minuten");
             detailNotes.setText(bundle.getString("Notes"));
             key = bundle.getString("Key");
         }
 
+        //Datensatz löschen
+        deleteBtn.setOnClickListener(v -> {
+            final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users/" + GlobalVariables.currentUser + "/therapies");
 
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users/"+ GlobalVariables.currentUser + "/therapies");
+            reference.child(key).removeValue().addOnSuccessListener(unused -> {
 
-                reference.child(key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        // Deletion from the database is successful
-                        // Now, delete the file from Firebase Storage
 
-                        FirebaseStorage storage = FirebaseStorage.getInstance();
-                        StorageReference fileReference = storage.getReference("users/"+ GlobalVariables.currentUser + "/therapies");
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                StorageReference fileReference = storage.getReference("users/" + GlobalVariables.currentUser + "/therapies");
 
-                        fileReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                // Deletion from Firebase Storage is successful
-                                Toast.makeText(DetailActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-                        });
-                    }
+                fileReference.delete().addOnSuccessListener(unused1 -> {
+                    // Deletion from Firebase Storage is successful
+                    Toast.makeText(DetailActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
+                    finish();
                 });
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            }
+            });
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
         });
 
-        editBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= new Intent(DetailActivity.this, UpdateActivity.class)
-                .putExtra("Title", detailTitle.getText().toString())
-                .putExtra("Date", detailDate.getText().toString())
-                .putExtra("Duration", detailDuration.getText().toString())
-                .putExtra("Notes", detailNotes.getText().toString())
-                .putExtra("Key", key);
-                startActivity(intent);
-            }
+        //Datensatz ändern
+        editBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(DetailActivity.this, UpdateActivity.class)
+                    .putExtra("Title", detailTitle.getText().toString())
+                    .putExtra("Date", detailDate.getText().toString())
+                    .putExtra("Duration", detailDuration.getText().toString())
+                    .putExtra("Notes", detailNotes.getText().toString())
+                    .putExtra("Key", key);
+            startActivity(intent);
         });
 
     }

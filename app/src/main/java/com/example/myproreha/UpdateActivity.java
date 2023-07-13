@@ -1,9 +1,6 @@
 package com.example.myproreha;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +23,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
@@ -37,7 +33,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -72,6 +67,7 @@ public class UpdateActivity extends AppCompatActivity {
         updateDate = findViewById(R.id.update_date);
         updateDuration = findViewById(R.id.update_duration);
         updateNotes = findViewById(R.id.update_notes);
+        updateDate.setTextColor(getResources().getColor(R.color.black));
 
         loadTherapyData();
 
@@ -109,7 +105,7 @@ public class UpdateActivity extends AppCompatActivity {
         });
 
 
-        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+        /*ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
 
                     @Override
@@ -122,21 +118,18 @@ public class UpdateActivity extends AppCompatActivity {
                         }
 
                     }
-                });
+                });*/
 
-
-        //...
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            // Erst das Key-Attribut aus dem Bundle abrufen
+
             key = bundle.getString("Key");
-            therapy = bundle.getString("Title"); // Get the therapy value from the bundle
+            therapy = bundle.getString("Title");
             updateDate.setText(bundle.getString("Date"));
             updateDuration.setText(bundle.getString("Duration"));
             updateNotes.setText(bundle.getString("Notes"));
         }
-
 
 
         databaseRef = FirebaseDatabase.getInstance().getReference("users/" + GlobalVariables.currentUser + "/therapies").child(key);
@@ -160,7 +153,7 @@ public class UpdateActivity extends AppCompatActivity {
 
         // Check if any of the fields are empty
         if (therapy.isEmpty() || date.isEmpty() || duration.isEmpty() || notes.isEmpty() || therapy.equals("Wähle eine Therapie")) {
-            Toast.makeText(UpdateActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            Toast.makeText(UpdateActivity.this, "Bitte alle Felder ausfüllen!", Toast.LENGTH_SHORT).show();
             return; // Return without updating the data
         }
 
@@ -202,20 +195,18 @@ public class UpdateActivity extends AppCompatActivity {
                 }
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(UpdateActivity.this,
-                        android.R.layout.simple_spinner_item, therapyList){
+                        android.R.layout.simple_spinner_item, therapyList) {
                     @Override
                     public View getView(int position, View convertView, ViewGroup parent) {
                         View view = super.getView(position, convertView, parent);
                         TextView textView = (TextView) view;
                         if (position == 0) {
-                            // Setze die Textfarbe des initialen Texts auf "green1"
                             textView.setTextColor(getResources().getColor(R.color.green1));
                             Drawable icDrop = getResources().getDrawable(R.drawable.ic_drop);
                             icDrop.setBounds(0, 0, icDrop.getIntrinsicWidth(), icDrop.getIntrinsicHeight());
                             textView.setCompoundDrawables(null, null, icDrop, null);
                             textView.setCompoundDrawablePadding(8);
                         } else {
-                            // Setze die normale Textfarbe für andere Elemente
                             textView.setTextColor(getResources().getColor(android.R.color.black));
                         }
                         return view;

@@ -79,6 +79,7 @@ public class UploadActivity extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
         String currentDate = dateFormat.format(calendar.getTime());
         uploadDate.setText(currentDate);
+        uploadDate.setTextColor(getResources().getColor(R.color.green1));
 
 
         //Implememtierung des DatePickers
@@ -108,15 +109,13 @@ public class UploadActivity extends AppCompatActivity {
                         int selectedYear = selectedDate.get(Calendar.YEAR);
 
                         uploadDate.setText(selectedDay + "." + (selectedMonth + 1) + "." + selectedYear);
+                        uploadDate.setTextColor(getResources().getColor(R.color.black));
                     }
                 });
 
                 datePicker.show(getSupportFragmentManager(), "DatePicker");
             }
         });
-
-        //Implementierung des dropdowns
-
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,14 +183,12 @@ public class UploadActivity extends AppCompatActivity {
                         View view = super.getView(position, convertView, parent);
                         TextView textView = (TextView) view;
                         if (position == 0) {
-                            // Setze die Textfarbe des initialen Texts auf "green1"
                             textView.setTextColor(getResources().getColor(R.color.green1));
                             Drawable icDrop = getResources().getDrawable(R.drawable.ic_drop);
                             icDrop.setBounds(0, 0, icDrop.getIntrinsicWidth(), icDrop.getIntrinsicHeight());
                             textView.setCompoundDrawables(null, null, icDrop, null);
                             textView.setCompoundDrawablePadding(8);
                         } else {
-                            // Setze die normale Textfarbe für andere Elemente
                             textView.setTextColor(getResources().getColor(android.R.color.black));
                         }
                         return view;

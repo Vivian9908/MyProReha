@@ -82,6 +82,7 @@
                 android:inputType="number"
                 android:minHeight="48dp"
                 android:gravity="center"
+                android:textColorHint="@color/green1"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/lavender_border"
                 tools:ignore="HardcodedText" />
@@ -96,6 +97,7 @@
                 android:inputType="textMultiLine"
                 android:minHeight="48dp"
                 android:gravity="center"
+                android:textColorHint="@color/green1"
                 android:background="@drawable/lavender_border"
                 tools:ignore="Autofill,HardcodedText" />
 

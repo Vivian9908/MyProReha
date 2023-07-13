@@ -48,7 +48,9 @@
             android:inputType="date"
             android:minHeight="48dp"
             android:text="Click to pick date"
-            android:textColor="#757575"
+            android:textColor="@color/green1"
+            android:textColorHighlight="@color/green1"
+            android:textColorHint="@color/green1"
             android:textSize="17sp"
             tools:ignore="HardcodedText,MissingConstraints,TextViewEdits" />
 
@@ -73,28 +75,30 @@
             android:id="@+id/duration_input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="12"
             android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="5dp"
+            android:autofillHints=""
+            android:background="@drawable/lavender_border"
+            android:ems="12"
+            android:gravity="center"
             android:hint="Dauer in Minuten"
             android:inputType="number"
             android:minHeight="48dp"
-            android:gravity="center"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/lavender_border"
-            tools:ignore="HardcodedText"
-            android:autofillHints="" />
+            android:textColorHint="@color/green1"
+            tools:ignore="HardcodedText" />
 
         <EditText
             android:id="@+id/notes_input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="12"
             android:layout_gravity="center_horizontal"
+            android:background="@drawable/lavender_border"
+            android:ems="12"
+            android:gravity="center"
             android:hint="Notizen"
             android:inputType="textMultiLine"
             android:minHeight="48dp"
-            android:gravity="center"
-            android:background="@drawable/lavender_border"
+            android:textColorHint="@color/green1"
             tools:ignore="Autofill,HardcodedText" />
 
         <Button
