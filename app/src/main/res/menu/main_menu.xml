@@ -5,7 +5,7 @@
 
     <item
     android:id="@+id/profile"
-    android:title="Account Settings"
+    android:title="Mein Profil"
         android:src="@drawable/ic_add"
         app:showAsAction="withText"
         />
