@@ -6,12 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -24,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.drawable.prorehalogosmall);
         setContentView(R.layout.activity_main);
 
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 1);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        dataList = new ArrayList<DataClass2>();
+        dataList = new ArrayList<>();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setCancelable(false);
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         final AlertDialog dialog = builder.create();
         dialog.show();
 
-        dataList = new ArrayList<DataClass2>();
+        dataList = new ArrayList<>();
 
         MyAdapter adapter = new MyAdapter(MainActivity.this, dataList);
         recyclerView.setAdapter(adapter);
@@ -69,16 +70,18 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
 
         eventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 dataList.clear();
                 for (DataSnapshot itemSnapshot: snapshot.getChildren()) {
                     DataClass2 dataClass = itemSnapshot.getValue(DataClass2.class);
+                    assert dataClass != null;
                     dataClass.setKey(itemSnapshot.getKey());
                     dataList.add(dataClass);
                 }
 
-                // Umkehrung der dataList
+                // Umkehrung RecyclerView
                 Collections.reverse(dataList);
 
                 adapter.notifyDataSetChanged();
@@ -92,12 +95,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, UploadActivity.class);
-                startActivity(intent);
-            }
+        fab.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, UploadActivity.class);
+            startActivity(intent);
         });
         userReference.addValueEventListener(new ValueEventListener() {
             @Override
