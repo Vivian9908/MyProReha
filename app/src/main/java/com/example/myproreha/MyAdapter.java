@@ -15,8 +15,8 @@ import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
-    private Context context;
-    private List<DataClass2> datalist;
+    private final Context context;
+    private final List<DataClass2> datalist;
 
     public MyAdapter(Context context, List<DataClass2> datalist) {
         this.context = context;
@@ -36,18 +36,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         holder.recDate.setText(datalist.get(position).getDataDate());
 
 
-        holder.recCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, DetailActivity.class);
-                intent.putExtra("Title", datalist.get(holder.getAdapterPosition()).getDataTitle());
-                intent.putExtra("Date", datalist.get(holder.getAdapterPosition()).getDataDate());
-                intent.putExtra("Duration", datalist.get(holder.getAdapterPosition()).getDataDuration());
-                intent.putExtra("Notes", datalist.get(holder.getAdapterPosition()).getDataNotes());
-                intent.putExtra("Key", datalist.get(holder.getAdapterPosition()).getKey());
+        holder.recCard.setOnClickListener(v -> {
+            Intent intent = new Intent(context, DetailActivity.class);
+            intent.putExtra("Title", datalist.get(holder.getAdapterPosition()).getDataTitle());
+            intent.putExtra("Date", datalist.get(holder.getAdapterPosition()).getDataDate());
+            intent.putExtra("Duration", datalist.get(holder.getAdapterPosition()).getDataDuration());
+            intent.putExtra("Notes", datalist.get(holder.getAdapterPosition()).getDataNotes());
+            intent.putExtra("Key", datalist.get(holder.getAdapterPosition()).getKey());
 
-                context.startActivity(intent);
-            }
+            context.startActivity(intent);
         });
 
     }
