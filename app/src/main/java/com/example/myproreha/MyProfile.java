@@ -80,7 +80,6 @@ public class MyProfile extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle Fehler beim Datenbankzugriff
             }
         });
 
@@ -127,21 +126,20 @@ public class MyProfile extends AppCompatActivity {
                             StorageReference fileReference = firestorage.getReference("users/" + GlobalVariables.currentUser);
 
                             fileReference.delete().addOnSuccessListener(unused2 -> {
-                                // Benutzerbild erfolgreich aus dem Speicher gelöscht
 
                                 Toast.makeText(MyProfile.this, "Konto gelöscht", Toast.LENGTH_SHORT).show();
-                                // Starte die Login-Seite hier, nachdem alle Löschoperationen abgeschlossen wurden
-                                startActivity(new Intent(getApplicationContext(), Login.class));
-                                finish();
+
                             });
                         }).addOnFailureListener(e -> {
-                            // Fehler beim Löschen des Benutzers aus Firebase Authentication
+
                             Toast.makeText(MyProfile.this, "Fehler beim Löschen des Kontos", Toast.LENGTH_SHORT).show();
                         });
                     } else {
-                        // Aktueller Benutzer ist null (nicht angemeldet)
+
                         Toast.makeText(MyProfile.this, "Nicht angemeldet", Toast.LENGTH_SHORT).show();
                     }
+
+                    startActivity(new Intent(getApplicationContext(), Login.class));
                 });
             });
 
@@ -155,11 +153,7 @@ public class MyProfile extends AppCompatActivity {
     }
 
 
-
-
-
-
-        private void uploadPicture(Uri imageUri) {
+    private void uploadPicture(Uri imageUri) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MyProfile.this);
         builder.setView(R.layout.progress_layout);
 

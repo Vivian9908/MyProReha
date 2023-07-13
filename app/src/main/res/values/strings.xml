@@ -5,8 +5,8 @@
     <string name="app_update">Bearbeiten</string>
     <string name="app_upload">Erstellen</string>
     <string name="app_account">Account Informationen</string>
-    <string name="already_have_an_account">Already have an account</string>
-    <string name="register">Register</string>
+    <string name="already_have_an_account">Ich habe schon einen Account!</string>
+    <string name="register">Registrieren</string>
     <string name="mein_stundenzettel">Mein Stundenzettel</string>
     <string name="dein_stundenzettel">Dein Stundenzettel:</string>
     <string name="massage">Massage</string>
@@ -15,11 +15,11 @@
     <string name="patient_war_sehr_verspannt_n_chste_sitzung_intensivere_behandlung">Patient war sehr verspannt, nächste Sitzung intensivere Behandlung</string>
     <string name="loading">Loading...</string>
     <string name="platzhalter">Mein Stundenzettel bearbeiten</string>
-    <string name="register_here">Register here</string>
-    <string name="full_name">Full Name</string>
+    <string name="register_here">Hier registrieren</string>
+    <string name="full_name">Vollständiger Name</string>
     <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="login_now">Login now</string>
+    <string name="password">Passwort</string>
+    <string name="login_now">Jetzt einloggen</string>
     <string name="mein_profil">Mein Profil</string>
     <string name="todo">TODO</string>
     <string name="meine_daten">Meine Daten</string>
@@ -31,6 +31,6 @@
     <string name="Mail">Email</string>
     <string name="pass">Password</string>
     <string name="login">Login</string>
-    <string name="don_t_have_an_account">Don\'t have an account</string>
-    <string name="register_now">Register now</string>
+    <string name="don_t_have_an_account">Noch keinen Account?</string>
+    <string name="register_now">Jetzt registrieren</string>
 </resources>
