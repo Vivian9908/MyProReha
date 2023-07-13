@@ -18,7 +18,7 @@
         android:textSize="18sp"
         android:gravity="center"
         android:textColor="#000000"
-        android:text="Register here"
+        android:text="@string/register_here"
 
         />
 
@@ -29,12 +29,14 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:hint="Full Name"
+        android:hint="@string/full_name"
         android:inputType="text"
         android:maxLines="1"
         android:minHeight="48dp"
         android:paddingStart="20dp"
-        android:paddingEnd="0dp" />
+        android:paddingEnd="0dp"
+        android:autofillHints=""
+        tools:ignore="VisualLintTextFieldSize" />
 
     <EditText
         android:id="@+id/email"
@@ -42,12 +44,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:hint="Email"
+        android:hint="@string/email"
         android:inputType="textEmailAddress"
         android:maxLines="1"
         android:minHeight="48dp"
         android:paddingStart="20dp"
-        android:paddingEnd="0dp" />
+        android:paddingEnd="0dp"
+        android:autofillHints=""
+        tools:ignore="VisualLintTextFieldSize" />
 
 
     <EditText
@@ -56,12 +60,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:maxLines="1"
         android:minHeight="48dp"
         android:paddingStart="20dp"
-        android:paddingEnd="0dp" />
+        android:paddingEnd="0dp"
+        tools:ignore="DuplicateSpeakableTextCheck,VisualLintTextFieldSize"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/conPassword"
@@ -69,12 +75,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:maxLines="1"
         android:minHeight="48dp"
         android:paddingStart="20dp"
-        android:paddingEnd="0dp" />
+        android:paddingEnd="0dp"
+        android:autofillHints=""
+        tools:ignore="VisualLintTextFieldSize" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/registerBtn"
@@ -84,7 +92,7 @@
         android:layout_marginEnd="20dp"
         android:text="@string/register"
         android:layout_marginTop="40dp"
-        />
+        tools:ignore="VisualLintButtonSize" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -105,7 +113,7 @@
             android:id="@+id/loginNow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login now"
+            android:text="@string/login_now"
             android:textStyle="bold"
 
             />

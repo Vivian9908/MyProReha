@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         app:srcCompat="@drawable/prorehalogo"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="20dp"
+        android:contentDescription="@string/imageView" />
 
     <TextView
         android:layout_width="match_parent"
@@ -23,36 +24,40 @@
         android:textSize="18sp"
         android:gravity="center"
         android:textColor="#000000"
-        android:text="Login here"
+        android:text="@string/login_here"
 
         />
 
     <EditText
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
         android:id="@+id/mail"
-        android:hint="Email"
-        android:maxLines="1"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="0dp"
-        />
-
-    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:id="@+id/password"
-        android:hint="Password"
-        android:maxLines="1"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
+        android:hint="@string/Mail"
+        android:inputType="textEmailAddress"
+        android:maxLines="1"
+        android:minHeight="48dp"
         android:paddingStart="20dp"
         android:paddingEnd="0dp"
-        />
+        android:autofillHints=""
+        tools:ignore="VisualLintTextFieldSize" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:hint="@string/pass"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        android:minHeight="48dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="0dp"
+        android:autofillHints=""
+        tools:ignore="VisualLintTextFieldSize" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/loginBtn"
@@ -60,11 +65,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:text="Login"
+        android:text="@string/login"
         android:layout_marginTop="40dp"
         android:background="@color/green1"
         android:textColor="@color/white"
-        />
+        tools:ignore="VisualLintButtonSize" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -77,7 +82,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Don't have an account"
+        android:text="@string/don_t_have_an_account"
 
         />
         <TextView
@@ -85,7 +90,7 @@
             android:id="@+id/registerNowBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Register now"
+            android:text="@string/register_now"
             android:textStyle="bold"
 
             />

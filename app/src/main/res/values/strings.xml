@@ -13,4 +13,24 @@
     <string name="_12_06_2006">12.06.2006</string>
     <string name="_40_min">40 min</string>
     <string name="patient_war_sehr_verspannt_n_chste_sitzung_intensivere_behandlung">Patient war sehr verspannt, nächste Sitzung intensivere Behandlung</string>
+    <string name="loading">Loading...</string>
+    <string name="platzhalter">Mein Stundenzettel bearbeiten</string>
+    <string name="register_here">Register here</string>
+    <string name="full_name">Full Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login_now">Login now</string>
+    <string name="mein_profil">Mein Profil</string>
+    <string name="todo">TODO</string>
+    <string name="meine_daten">Meine Daten</string>
+    <string name="gesamte_arbeitszeit">Gesamte Arbeitszeit:</string>
+    <string name="delete">TODO</string>
+    <string name="fab">TODO</string>
+    <string name="login_here">Login here</string>
+    <string name="imageView">TODO</string>
+    <string name="Mail">Email</string>
+    <string name="pass">Password</string>
+    <string name="login">Login</string>
+    <string name="don_t_have_an_account">Don\'t have an account</string>
+    <string name="register_now">Register now</string>
 </resources>

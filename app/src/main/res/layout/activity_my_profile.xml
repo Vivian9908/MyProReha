@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        android:text="Mein Profil"
+        android:text="@string/mein_profil"
         android:textColor="#000000"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -25,7 +25,8 @@
         android:id="@+id/imageView2"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/proreha"/>
+        android:src="@drawable/proreha"
+        android:contentDescription="@string/todo" />
 
     <androidx.cardview.widget.CardView
 
@@ -48,19 +49,20 @@
             android:background="@drawable/lavender_border"
             android:gravity="left"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="10dp"
+            tools:ignore="RtlHardcoded">
 
             <TextView
                 android:id="@+id/detailTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:text="Meine Daten"
+                android:paddingStart="15dp"
+                android:text="@string/meine_daten"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold"
 
-                />
+                tools:ignore="RtlSymmetry" />
 
             <View
                 android:layout_width="match_parent"
@@ -77,11 +79,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:drawableLeft="@drawable/ic_account"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:textAlignment="center"
-                tools:ignore="RtlCompat" />
+                tools:ignore="RtlCompat"
+                app:drawableLeftCompat="@drawable/ic_account" />
 
             <TextView
                 android:id="@+id/profileMail"
@@ -89,11 +91,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:drawableLeft="@drawable/ic_email"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:textAlignment="center"
-                tools:ignore="RtlCompat" />
+                tools:ignore="RtlCompat"
+                app:drawableLeftCompat="@drawable/ic_email" />
 
         </LinearLayout>
 
@@ -120,18 +122,19 @@
             android:background="@drawable/orange_border"
             android:gravity="left"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="10dp"
+            tools:ignore="RtlHardcoded">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="15dp"
-                android:text="Gesamte Arbeitszeit: "
+                android:text="@string/gesamte_arbeitszeit"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold"
 
-                />
+                tools:ignore="RtlSymmetry" />
 
             <View
                 android:layout_width="match_parent"
@@ -148,16 +151,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:drawableLeft="@drawable/ic_sum"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:textAlignment="center"
-                tools:ignore="RtlCompat" />
+                tools:ignore="RtlCompat"
+                app:drawableLeftCompat="@drawable/ic_sum" />
 
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
-
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -165,11 +167,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="40dp"
-        app:fab_size="normal"
         android:backgroundTint="@color/red"
+        android:contentDescription="@string/delete"
         android:src="@drawable/ic_delete"
+        app:fab_size="normal"
         app:tint="@color/white"
-        android:contentDescription="TODO" />
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
 
 
