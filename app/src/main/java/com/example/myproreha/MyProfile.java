@@ -114,13 +114,10 @@ public class MyProfile extends AppCompatActivity {
                 final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users/" + GlobalVariables.currentUser);
 
                 reference.removeValue().addOnSuccessListener(unused -> {
-                    // Benutzerdaten erfolgreich aus der Realtime Database gelöscht
 
-                    // Firebase Authentication: Den Benutzer löschen
                     FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                     if (currentUser != null) {
                         currentUser.delete().addOnSuccessListener(unused1 -> {
-                            // Benutzer erfolgreich aus Firebase Authentication gelöscht
 
                             FirebaseStorage firestorage = FirebaseStorage.getInstance();
                             StorageReference fileReference = firestorage.getReference("users/" + GlobalVariables.currentUser);

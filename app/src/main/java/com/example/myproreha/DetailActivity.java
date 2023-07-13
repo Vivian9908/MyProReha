@@ -1,5 +1,6 @@
 package com.example.myproreha;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -50,22 +51,39 @@ public class DetailActivity extends AppCompatActivity {
 
         //Datensatz löschen
         deleteBtn.setOnClickListener(v -> {
-            final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users/" + GlobalVariables.currentUser + "/therapies");
 
-            reference.child(key).removeValue().addOnSuccessListener(unused -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(DetailActivity.this);
+            builder.setTitle("Bestätigung");
+            builder.setMessage("Möchten Sie den Stundenzettel wirklich löschen?");
+
+            builder.setPositiveButton("Ja", (dialog, which) -> {
 
 
-                FirebaseStorage storage = FirebaseStorage.getInstance();
-                StorageReference fileReference = storage.getReference("users/" + GlobalVariables.currentUser + "/therapies");
+                final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users/" + GlobalVariables.currentUser + "/therapies");
+                reference.child(key).removeValue().addOnSuccessListener(unused -> {
 
-                fileReference.delete().addOnSuccessListener(unused1 -> {
-                    // Deletion from Firebase Storage is successful
-                    Toast.makeText(DetailActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
-                    finish();
+
+                    FirebaseStorage storage = FirebaseStorage.getInstance();
+                    StorageReference fileReference = storage.getReference("users/" + GlobalVariables.currentUser + "/therapies");
+
+                    fileReference.delete().addOnSuccessListener(unused1 -> {
+                        // Deletion from Firebase Storage is successful
+                        Toast.makeText(DetailActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
+                        finish();
+                    });
                 });
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             });
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+
+            builder.setNegativeButton("Nein", (dialog, which) -> {
+                dialog.dismiss();
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
         });
+
 
         //Datensatz ändern
         editBtn.setOnClickListener(v -> {
