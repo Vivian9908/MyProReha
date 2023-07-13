@@ -23,7 +23,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="left"
         android:layout_gravity="center_horizontal"
         android:padding="20dp"
         android:background="@drawable/lavender_border"
@@ -32,10 +31,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dein Stundenzettel:"
+            android:text="@string/dein_stundenzettel"
             android:textColor="#000000"
             android:textSize="15sp"
-
             />
 
         <View
@@ -51,7 +49,7 @@
         android:id="@+id/detailTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Massage"
+        android:text="@string/massage"
         android:textColor="#000000"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -74,10 +72,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:drawablePadding="10dp"
-        android:drawableLeft="@drawable/ic_calender"
-        android:text="12.06.2006"
+
+        android:text="@string/_12_06_2006"
         android:textAlignment="center"
-        tools:ignore="RtlCompat" />
+        tools:ignore="RtlCompat"
+        app:drawableStartCompat="@drawable/ic_calender" />
 
     <TextView
         android:id="@+id/detailDuration"
@@ -87,10 +86,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:drawablePadding="10dp"
-        android:drawableLeft="@drawable/ic_time"
-        android:text="40 min"
+        android:text="@string/_40_min"
         android:textAlignment="center"
-        tools:ignore="RtlCompat" />
+        tools:ignore="RtlCompat"
+        app:drawableLeftCompat="@drawable/ic_time"
+        app:drawableStartCompat="@drawable/ic_time" />
 
     <TextView
         android:id="@+id/detailNotes"
@@ -99,9 +99,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:drawablePadding="10dp"
-        android:drawableLeft="@drawable/ic_note"
-        android:text="Patient war sehr verspannt, nächste Sitzung intensivere Behandlung"
-        />
+        android:text="@string/patient_war_sehr_verspannt_n_chste_sitzung_intensivere_behandlung"
+        app:drawableLeftCompat="@drawable/ic_note"
+        app:drawableStartCompat="@drawable/ic_note" />
 
     </LinearLayout>
 
@@ -110,7 +110,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <com.github.clans.fab.FloatingActionMenu
             android:layout_width="wrap_content"
@@ -144,10 +143,7 @@
                 android:src="@drawable/ic_delete"
                 app:fab_showShadow="true"
                 app:fab_colorNormal="@color/red"
-                app:fab_size="mini"
-                ></com.github.clans.fab.FloatingActionButton>
-
-
+                app:fab_size="mini"/>
 
         </com.github.clans.fab.FloatingActionMenu>
 

@@ -8,4 +8,9 @@
     <string name="already_have_an_account">Already have an account</string>
     <string name="register">Register</string>
     <string name="mein_stundenzettel">Mein Stundenzettel</string>
+    <string name="dein_stundenzettel">Dein Stundenzettel:</string>
+    <string name="massage">Massage</string>
+    <string name="_12_06_2006">12.06.2006</string>
+    <string name="_40_min">40 min</string>
+    <string name="patient_war_sehr_verspannt_n_chste_sitzung_intensivere_behandlung">Patient war sehr verspannt, nächste Sitzung intensivere Behandlung</string>
 </resources>
